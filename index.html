@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>클래스룸 마피아 Firebase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Poor+Story&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="app-header">
+      <div>
+        <div class="eyebrow">MADE FOR CLASSROOM PLAY</div>
+        <h1>클래스룸 마피아</h1>
+      </div>
+      <div class="header-actions">
+        <button class="secondary" id="btnManualReconnect">재연결</button>
+        <button class="secondary" id="btnGoHome">처음으로</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel hero" id="screenHome">
+        <h2>실시간 Firebase 버전</h2>
+        <p>태블릿 최적화 / 자동 복구 / 역할 공개 / 사망 연출 / 교사용 방 관리</p>
+
+        <div class="button-stack">
+          <button id="btnTeacherOpen">교사용으로 시작</button>
+          <button id="btnStudentOpen">학생으로 입장</button>
+        </div>
+
+        <div class="info-box">
+          <strong>이번 구조 핵심</strong>
+          <ul>
+            <li>교사: 방 만들기 / 방 나가기 / 방 종료 후 새 방 재생성</li>
+            <li>학생: 새로고침·일시 끊김 뒤 자동 복구</li>
+            <li>공용: Firebase Realtime Database 실시간 동기화</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="screenTeacherSetup">
+        <h2>교사용 방 만들기</h2>
+        <div class="grid2">
+          <label class="field">
+            <span>교사 이름</span>
+            <input id="teacherName" placeholder="예: 우니쌤" />
+          </label>
+          <label class="field">
+            <span>기본 타이머(초)</span>
+            <input id="defaultTimer" type="number" min="20" max="300" value="60" />
+          </label>
+        </div>
+
+        <h3>역할 수 설정</h3>
+        <div class="roles-grid" id="roleSettings"></div>
+
+        <div class="button-row">
+          <button id="btnCreateRoom">방 만들기</button>
+          <button class="secondary" data-back-home="1">취소</button>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="screenStudentJoin">
+        <h2>학생 입장</h2>
+        <div class="grid2">
+          <label class="field">
+            <span>이름</span>
+            <input id="studentName" placeholder="이름 입력" />
+          </label>
+          <label class="field">
+            <span>방 코드</span>
+            <input id="studentRoomCode" placeholder="예: MAF123" maxlength="6" />
+          </label>
+        </div>
+        <div class="button-row">
+          <button id="btnStudentJoin">입장하기</button>
+          <button class="secondary" data-back-home="1">취소</button>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="screenTeacherRoom">
+        <div class="room-header">
+          <div>
+            <div class="eyebrow">교사용 방</div>
+            <h2><span id="teacherRoomCode">------</span></h2>
+          </div>
+          <div class="status-pills">
+            <span class="pill" id="pillPhase">대기</span>
+            <span class="pill" id="pillConnection">연결 확인중</span>
+          </div>
+        </div>
+
+        <div class="button-row wrap">
+          <button id="btnAssignRoles">역할 배정</button>
+          <button id="btnStartNight">밤 시작</button>
+          <button id="btnStartDay">낮 시작</button>
+          <button id="btnResolveNight">밤 결과 처리</button>
+          <button class="danger" id="btnTeacherLeave">방 종료 후 나가기</button>
+        </div>
+
+        <div class="grid2 stretch">
+          <div class="subpanel">
+            <h3>진행</h3>
+            <div class="phase-box">
+              <div>현재 단계: <strong id="teacherPhaseText">대기</strong></div>
+              <div>남은 시간: <strong id="teacherTimerText">-</strong></div>
+            </div>
+            <label class="field">
+              <span>교사용 공지</span>
+              <textarea id="teacherAnnouncement" rows="3" placeholder="예: 밤 행동을 선택하세요"></textarea>
+            </label>
+            <div class="button-row">
+              <button id="btnSendAnnouncement">공지 보내기</button>
+              <button class="secondary" id="btnShowRevealDemo">역할 공개 연출 테스트</button>
+              <button class="secondary" id="btnShowDeathDemo">사망 연출 테스트</button>
+            </div>
+          </div>
+
+          <div class="subpanel">
+            <h3>학생 목록</h3>
+            <div id="teacherPlayers" class="player-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="screenStudentRoom">
+        <div class="room-header">
+          <div>
+            <div class="eyebrow">학생 화면</div>
+            <h2><span id="studentRoomCodeLabel">------</span></h2>
+          </div>
+          <div class="status-pills">
+            <span class="pill" id="studentPhasePill">대기</span>
+            <span class="pill" id="studentConnPill">재연결 대기</span>
+          </div>
+        </div>
+
+        <div class="grid2 stretch">
+          <div class="subpanel">
+            <h3>내 정보</h3>
+            <div class="identity-card">
+              <div>이름: <strong id="meName">-</strong></div>
+              <div>역할: <strong id="meRole">미정</strong></div>
+              <div>생존: <strong id="meAlive">생존</strong></div>
+            </div>
+            <div class="button-row wrap">
+              <button id="btnOpenRoleGuide">내 역할 보기</button>
+              <button class="secondary" id="btnStudentLeave">방 나가기</button>
+            </div>
+            <div class="notice" id="studentAnnouncement">교사의 공지가 여기에 표시됩니다.</div>
+          </div>
+
+          <div class="subpanel">
+            <h3>행동 선택</h3>
+            <div id="studentActionHelp" class="muted">역할이 배정되면 여기서 행동할 수 있어요.</div>
+            <div id="studentActionArea"></div>
+          </div>
+        </div>
+
+        <div class="subpanel">
+          <h3>일반 채팅</h3>
+          <div id="chatList" class="chat-list"></div>
+          <div class="chat-entry">
+            <input id="chatInput" placeholder="메시지 입력" />
+            <button id="btnSendChat">전송</button>
+          </div>
+        </div>
+
+        <div class="subpanel hidden" id="mafiaChatPanel">
+          <h3>마피아 비밀 채팅</h3>
+          <div id="mafiaChatList" class="chat-list"></div>
+          <div class="chat-entry">
+            <input id="mafiaChatInput" placeholder="마피아 전용 메시지" />
+            <button id="btnSendMafiaChat">전송</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="overlay" class="overlay hidden">
+    <div class="overlay-card" id="overlayCard">
+      <div class="overlay-eyebrow" id="overlayEyebrow">이벤트</div>
+      <h2 id="overlayTitle">제목</h2>
+      <p id="overlayBody">내용</p>
+      <button id="btnCloseOverlay">확인</button>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
