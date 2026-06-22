@@ -2,195 +2,1069 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>클래스룸 마피아 Firebase</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Poor+Story&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&family=Creepster&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#090909; --panel:#141414; --panel2:#1d1d1d; --line:#3b3b3b;
+      --red:#d82929; --red2:#8d1212; --text:#f4f4f4; --muted:#bdbdbd;
+      --yellow:#ffcb45; --green:#45c486; --blue:#58a6ff; --shadow:0 8px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:radial-gradient(circle at top, #1c0707, #070707 55%);color:var(--text);font-family:Pretendard, system-ui, sans-serif}
+    body{min-height:100vh}
+    .app{max-width:1100px;margin:0 auto;padding:16px}
+    .hidden{display:none !important}
+    .screen{display:none}
+    .screen.active{display:block}
+    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand h1{font-family:Creepster, cursive;font-size:40px;line-height:1;margin:0;color:#ff6767;letter-spacing:1px}
+    .badge{border:1px solid #742020;background:#260c0c;color:#ffb3b3;padding:6px 10px;border-radius:999px;font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+    .panel h2,.panel h3{margin:0 0 12px}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .col{display:flex;flex-direction:column;gap:8px}
+    .grow{flex:1}
+    label{font-size:14px;color:#ddd}
+    input,select,textarea{width:100%;padding:14px 14px;background:#0f0f0f;border:1px solid #434343;border-radius:14px;color:white;font-size:16px}
+    textarea{min-height:96px;resize:vertical}
+    button{border:0;border-radius:14px;padding:14px 16px;background:#2d2d2d;color:white;font-weight:800;font-size:16px;cursor:pointer;min-height:52px}
+    button.primary{background:linear-gradient(180deg,var(--red),var(--red2))}
+    button.secondary{background:#253043}
+    button.good{background:#21462f}
+    button.warn{background:#5b4214}
+    button.danger{background:#5f1717}
+    button.ghost{background:transparent;border:1px solid #545454}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    .code{font-size:34px;letter-spacing:6px;padding:18px;border-radius:16px;background:#090909;border:1px dashed #804040;text-align:center;font-weight:800}
+    .list{display:grid;gap:8px}
+    .item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border-radius:14px;background:#111;border:1px solid #303030}
+    .pill{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
+    .pill.red{background:#421515;color:#ffb8b8}
+    .pill.green{background:#153223;color:#b7f2d2}
+    .pill.blue{background:#152743;color:#bdd7ff}
+    .pill.gray{background:#2b2b2b;color:#ddd}
+    .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .role-box{padding:12px;border-radius:14px;background:#101010;border:1px solid #313131}
+    .stage-banner{padding:14px;border-radius:16px;background:#1b1010;border:1px solid #5e2626;font-size:18px;font-weight:800;text-align:center}
+    .chat-box{height:240px;overflow:auto;background:#0e0e0e;border:1px solid #2f2f2f;border-radius:16px;padding:10px}
+    .msg{padding:8px 10px;border-radius:12px;background:#171717;margin:6px 0}
+    .msg small{display:block;color:#bbb;margin-bottom:4px}
+    .vote-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .big-center{display:flex;align-items:center;justify-content:center;text-align:center;min-height:48vh}
+    .announce{padding:12px 14px;border-left:4px solid #b13535;background:#170f0f;border-radius:12px}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+    .overlay.show{display:flex}
+    .overlay-card{max-width:720px;width:min(92vw,720px);background:linear-gradient(180deg,#1b0b0b,#0f0f0f);border:1px solid #7b2c2c;border-radius:22px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center}
+    .overlay-title{font-size:36px;font-weight:900;margin-bottom:8px}
+    .overlay-body{font-size:20px;line-height:1.55}
+    .role-name{font-size:30px;font-weight:900;color:#ffcf66}
+    .subgrid{display:grid;grid-template-columns:1fr;gap:12px}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .stat{padding:14px;border-radius:14px;background:#111;border:1px solid #2f2f2f;text-align:center}
+    .tiny{font-size:12px;color:#bdbdbd}
+    @media (min-width: 820px){
+      .grid.main{grid-template-columns:1.1fr .9fr}
+      .subgrid.twocol{grid-template-columns:1fr 1fr}
+      .roles{grid-template-columns:repeat(3,1fr)}
+      .vote-grid{grid-template-columns:repeat(3,1fr)}
+      .stats{grid-template-columns:repeat(4,1fr)}
+      .app{padding:20px}
+      button,input,select,textarea{font-size:17px}
+    }
+  </style>
 </head>
 <body>
-  <div id="app" class="app-shell">
-    <header class="app-header">
-      <div>
-        <div class="eyebrow">MADE FOR CLASSROOM PLAY</div>
-        <h1>클래스룸 마피아</h1>
-      </div>
-      <div class="header-actions">
-        <button class="secondary" id="btnManualReconnect">재연결</button>
-        <button class="secondary" id="btnGoHome">처음으로</button>
-      </div>
-    </header>
-
-    <main class="layout">
-      <section class="panel hero" id="screenHome">
-        <h2>실시간 Firebase 버전</h2>
-        <p>태블릿 최적화 / 자동 복구 / 역할 공개 / 사망 연출 / 교사용 방 관리</p>
-
-        <div class="button-stack">
-          <button id="btnTeacherOpen">교사용으로 시작</button>
-          <button id="btnStudentOpen">학생으로 입장</button>
-        </div>
-
-        <div class="info-box">
-          <strong>이번 구조 핵심</strong>
-          <ul>
-            <li>교사: 방 만들기 / 방 나가기 / 방 종료 후 새 방 재생성</li>
-            <li>학생: 새로고침·일시 끊김 뒤 자동 복구</li>
-            <li>공용: Firebase Realtime Database 실시간 동기화</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel hidden" id="screenTeacherSetup">
-        <h2>교사용 방 만들기</h2>
-        <div class="grid2">
-          <label class="field">
-            <span>교사 이름</span>
-            <input id="teacherName" placeholder="예: 우니쌤" />
-          </label>
-          <label class="field">
-            <span>기본 타이머(초)</span>
-            <input id="defaultTimer" type="number" min="20" max="300" value="60" />
-          </label>
-        </div>
-
-        <h3>역할 수 설정</h3>
-        <div class="roles-grid" id="roleSettings"></div>
-
-        <div class="button-row">
-          <button id="btnCreateRoom">방 만들기</button>
-          <button class="secondary" data-back-home="1">취소</button>
-        </div>
-      </section>
-
-      <section class="panel hidden" id="screenStudentJoin">
-        <h2>학생 입장</h2>
-        <div class="grid2">
-          <label class="field">
-            <span>이름</span>
-            <input id="studentName" placeholder="이름 입력" />
-          </label>
-          <label class="field">
-            <span>방 코드</span>
-            <input id="studentRoomCode" placeholder="예: MAF123" maxlength="6" />
-          </label>
-        </div>
-        <div class="button-row">
-          <button id="btnStudentJoin">입장하기</button>
-          <button class="secondary" data-back-home="1">취소</button>
-        </div>
-      </section>
-
-      <section class="panel hidden" id="screenTeacherRoom">
-        <div class="room-header">
-          <div>
-            <div class="eyebrow">교사용 방</div>
-            <h2><span id="teacherRoomCode">------</span></h2>
-          </div>
-          <div class="status-pills">
-            <span class="pill" id="pillPhase">대기</span>
-            <span class="pill" id="pillConnection">연결 확인중</span>
-          </div>
-        </div>
-
-        <div class="button-row wrap">
-          <button id="btnAssignRoles">역할 배정</button>
-          <button id="btnStartNight">밤 시작</button>
-          <button id="btnStartDay">낮 시작</button>
-          <button id="btnResolveNight">밤 결과 처리</button>
-          <button class="danger" id="btnTeacherLeave">방 종료 후 나가기</button>
-        </div>
-
-        <div class="grid2 stretch">
-          <div class="subpanel">
-            <h3>진행</h3>
-            <div class="phase-box">
-              <div>현재 단계: <strong id="teacherPhaseText">대기</strong></div>
-              <div>남은 시간: <strong id="teacherTimerText">-</strong></div>
-            </div>
-            <label class="field">
-              <span>교사용 공지</span>
-              <textarea id="teacherAnnouncement" rows="3" placeholder="예: 밤 행동을 선택하세요"></textarea>
-            </label>
-            <div class="button-row">
-              <button id="btnSendAnnouncement">공지 보내기</button>
-              <button class="secondary" id="btnShowRevealDemo">역할 공개 연출 테스트</button>
-              <button class="secondary" id="btnShowDeathDemo">사망 연출 테스트</button>
-            </div>
-          </div>
-
-          <div class="subpanel">
-            <h3>학생 목록</h3>
-            <div id="teacherPlayers" class="player-list"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel hidden" id="screenStudentRoom">
-        <div class="room-header">
-          <div>
-            <div class="eyebrow">학생 화면</div>
-            <h2><span id="studentRoomCodeLabel">------</span></h2>
-          </div>
-          <div class="status-pills">
-            <span class="pill" id="studentPhasePill">대기</span>
-            <span class="pill" id="studentConnPill">재연결 대기</span>
-          </div>
-        </div>
-
-        <div class="grid2 stretch">
-          <div class="subpanel">
-            <h3>내 정보</h3>
-            <div class="identity-card">
-              <div>이름: <strong id="meName">-</strong></div>
-              <div>역할: <strong id="meRole">미정</strong></div>
-              <div>생존: <strong id="meAlive">생존</strong></div>
-            </div>
-            <div class="button-row wrap">
-              <button id="btnOpenRoleGuide">내 역할 보기</button>
-              <button class="secondary" id="btnStudentLeave">방 나가기</button>
-            </div>
-            <div class="notice" id="studentAnnouncement">교사의 공지가 여기에 표시됩니다.</div>
-          </div>
-
-          <div class="subpanel">
-            <h3>행동 선택</h3>
-            <div id="studentActionHelp" class="muted">역할이 배정되면 여기서 행동할 수 있어요.</div>
-            <div id="studentActionArea"></div>
-          </div>
-        </div>
-
-        <div class="subpanel">
-          <h3>일반 채팅</h3>
-          <div id="chatList" class="chat-list"></div>
-          <div class="chat-entry">
-            <input id="chatInput" placeholder="메시지 입력" />
-            <button id="btnSendChat">전송</button>
-          </div>
-        </div>
-
-        <div class="subpanel hidden" id="mafiaChatPanel">
-          <h3>마피아 비밀 채팅</h3>
-          <div id="mafiaChatList" class="chat-list"></div>
-          <div class="chat-entry">
-            <input id="mafiaChatInput" placeholder="마피아 전용 메시지" />
-            <button id="btnSendMafiaChat">전송</button>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <div id="overlay" class="overlay hidden">
-    <div class="overlay-card" id="overlayCard">
-      <div class="overlay-eyebrow" id="overlayEyebrow">이벤트</div>
-      <h2 id="overlayTitle">제목</h2>
-      <p id="overlayBody">내용</p>
-      <button id="btnCloseOverlay">확인</button>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <h1>Classroom Mafia</h1>
+      <span class="badge" id="connectionBadge">오프라인</span>
+    </div>
+    <div class="row">
+      <span class="badge" id="sessionBadge">세션 없음</span>
+      <button class="ghost" id="reconnectBtn">재연결</button>
     </div>
   </div>
 
-  <script type="module" src="./app.js"></script>
+  <div id="screen-home" class="screen active">
+    <div class="grid main">
+      <section class="panel">
+        <h2>시작</h2>
+        <p class="muted">교사는 방을 만들고, 학생은 코드로 입장합니다. Firebase Realtime Database 기반 실시간 동기화 버전입니다.</p>
+        <div class="row">
+          <button class="primary grow" id="gotoTeacherBtn">교사용 화면</button>
+          <button class="secondary grow" id="gotoStudentBtn">학생용 화면</button>
+        </div>
+      </section>
+      <section class="panel">
+        <h3>주요 기능</h3>
+        <div class="list">
+          <div class="item"><span>낮 투표 자동 집계</span><span class="pill blue">정교화</span></div>
+          <div class="item"><span>정치인 2표 / 처형 면역</span><span class="pill blue">반영</span></div>
+          <div class="item"><span>동률 무효 / 생존자만 집계</span><span class="pill blue">반영</span></div>
+          <div class="item"><span>승리 조건 자동 판정</span><span class="pill green">자동</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="screen-teacher-setup" class="screen">
+    <div class="panel">
+      <h2>교사용 방 만들기</h2>
+      <div class="subgrid twocol">
+        <div class="col">
+          <label>교사 이름</label>
+          <input id="teacherName" placeholder="예: 우니쌤" value="교사">
+        </div>
+        <div class="col">
+          <label>방 제목</label>
+          <input id="roomTitle" placeholder="예: 2-3반 마피아">
+        </div>
+      </div>
+      <h3 style="margin-top:16px">역할 수 설정</h3>
+      <div class="roles" id="roleConfig"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="primary grow" id="createRoomBtn">방 만들기</button>
+        <button class="ghost" id="backHome1">뒤로</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-student-join" class="screen">
+    <div class="panel">
+      <h2>학생 입장</h2>
+      <div class="subgrid twocol">
+        <div class="col"><label>방 코드</label><input id="joinCode" placeholder="예: AB12CD"></div>
+        <div class="col"><label>이름</label><input id="joinName" placeholder="이름 입력"></div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="primary grow" id="joinRoomBtn">입장하기</button>
+        <button class="ghost" id="backHome2">뒤로</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-teacher-room" class="screen">
+    <div class="grid main">
+      <section class="panel">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div>
+            <h2 id="teacherRoomTitle">교사용 진행 화면</h2>
+            <div class="code" id="roomCodeBox">------</div>
+          </div>
+          <div class="col" style="min-width:240px">
+            <button class="primary" id="assignRolesBtn">역할 배정</button>
+            <button class="secondary" id="startDayBtn">낮 시작</button>
+            <button class="secondary" id="startNightBtn">밤 시작</button>
+            <button class="warn" id="resolveDayBtn">낮 투표 마감/집계</button>
+            <button class="warn" id="resolveNightBtn">밤 결과 처리</button>
+            <button class="danger" id="closeRoomBtn">방 종료하고 나가기</button>
+          </div>
+        </div>
+
+        <div class="stage-banner" id="phaseBanner">현재 단계: 로비</div>
+        <div class="stats" style="margin-top:12px">
+          <div class="stat"><div class="tiny">생존</div><div id="aliveCount">0</div></div>
+          <div class="stat"><div class="tiny">마피아 생존</div><div id="mafiaCount">0</div></div>
+          <div class="stat"><div class="tiny">비마피아 생존</div><div id="citizenCount">0</div></div>
+          <div class="stat"><div class="tiny">현재 일수</div><div id="dayCount">0</div></div>
+        </div>
+
+        <h3 style="margin-top:16px">공지 / 결과 로그</h3>
+        <div id="announceList" class="list"></div>
+      </section>
+
+      <section class="panel">
+        <h3>참가 학생</h3>
+        <div id="teacherPlayerList" class="list"></div>
+        <h3 style="margin-top:16px">교사 공지 보내기</h3>
+        <div class="row">
+          <input id="teacherNotice" class="grow" placeholder="예: 1분 토론 시작!">
+          <button id="sendNoticeBtn">전송</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="screen-student-room" class="screen">
+    <div class="grid main">
+      <section class="panel">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div>
+            <h2 id="studentWelcome">학생 화면</h2>
+            <div class="muted" id="studentRoomMeta">방 정보</div>
+          </div>
+          <div class="col" style="min-width:220px">
+            <button class="ghost" id="showRoleBtn">내 역할 보기</button>
+            <button class="ghost" id="leaveRoomBtn">방 나가기</button>
+          </div>
+        </div>
+        <div class="stage-banner" id="studentPhaseBanner">현재 단계: 로비</div>
+
+        <div class="subgrid twocol" style="margin-top:14px">
+          <div class="panel" style="padding:12px">
+            <h3>공지</h3>
+            <div id="studentNoticeList" class="list"></div>
+          </div>
+          <div class="panel" style="padding:12px">
+            <h3>내 상태</h3>
+            <div id="myStatusBox" class="list"></div>
+          </div>
+        </div>
+
+        <div id="studentActions" class="subgrid twocol" style="margin-top:14px"></div>
+      </section>
+
+      <section class="panel">
+        <h3>전체 채팅</h3>
+        <div class="chat-box" id="globalChat"></div>
+        <div class="row" style="margin-top:10px">
+          <input id="globalChatInput" class="grow" placeholder="메시지 입력">
+          <button id="sendGlobalChatBtn">전송</button>
+        </div>
+
+        <div id="mafiaSection" class="hidden" style="margin-top:18px">
+          <h3>마피아 비밀 채팅</h3>
+          <div class="chat-box" id="mafiaChat"></div>
+          <div class="row" style="margin-top:10px">
+            <input id="mafiaChatInput" class="grow" placeholder="마피아만 전송 가능">
+            <button id="sendMafiaChatBtn">전송</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay">
+  <div class="overlay-card">
+    <div class="overlay-title" id="overlayTitle">알림</div>
+    <div class="overlay-body" id="overlayBody"></div>
+    <div class="row" style="margin-top:18px;justify-content:center">
+      <button class="primary" id="overlayCloseBtn">확인</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getDatabase, ref, set, get, update, push, onValue, remove, onDisconnect, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC4DmP5xSITDs7wY1fPR_bScNqbqUx7UXo",
+    authDomain: "classroommafia.firebaseapp.com",
+    databaseURL: "https://classroommafia-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "classroommafia",
+    storageBucket: "classroommafia.firebasestorage.app",
+    messagingSenderId: "303384179715",
+    appId: "1:303384179715:web:e02f38817efd9fea83ca36"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const ROLE_INFO = {
+    mafia: { label:"마피아", team:"mafia", desc:"매일 밤 팀원들과 익명투표로 한 명을 제거합니다. 동률이면 랜덤 처리됩니다." },
+    citizen: { label:"일반 시민", team:"citizen", desc:"낮과 밤 일반 채팅에 참여하고 토론으로 마피아를 찾습니다." },
+    police: { label:"경찰", team:"citizen", desc:"매일 밤 한 명을 조사해 마피아 여부를 확인합니다." },
+    doctor: { label:"의사", team:"citizen", desc:"매일 밤 한 명을 보호합니다. 본인 보호 가능." },
+    thug: { label:"건달", team:"citizen", desc:"매일 밤 한 명을 막아 다음 낮 투표에 참여하지 못하게 합니다." },
+    terrorist: { label:"테러리스트", team:"citizen", desc:"밤마다 타겟 지정. 낮 처형으로 본인이 죽으면 타겟도 함께 죽습니다." },
+    reporter: { label:"기자", team:"citizen", desc:"두 번째 밤부터 1회, 대상의 역할을 다음 날 공개합니다." },
+    medium: { label:"영매", team:"citizen", desc:"매일 밤 죽은 사람 한 명의 직업을 확인합니다." },
+    priest: { label:"성직자", team:"citizen", desc:"게임 중 1회, 죽은 사람 한 명을 부활시킵니다." },
+    politician: { label:"정치인", team:"citizen", desc:"낮 투표에서 처형되지 않으며, 낮 투표 시 2표로 계산됩니다." },
+    soldier: { label:"군인", team:"citizen", desc:"마피아 공격을 최초 1회 생존하고, 그때 마피아 한 명의 정체를 알게 됩니다." }
+  };
+  const ROLE_DEFAULTS = { mafia:1, citizen:3, police:1, doctor:1, thug:0, terrorist:0, reporter:0, medium:0, priest:0, politician:0, soldier:0 };
+
+  const els = {};
+  document.querySelectorAll("[id]").forEach(el => els[el.id] = el);
+
+  let state = {
+    roomCode: null,
+    roomPath: null,
+    role: null, // teacher/student
+    playerId: null,
+    playerName: null,
+    unsubscribers: [],
+    heartbeat: null,
+    roomData: null
+  };
+
+  function qs(id){ return document.getElementById(id); }
+  function playClick(){
+    try{
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sawtooth"; o.frequency.setValueAtTime(180, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.18);
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.05, ctx.currentTime + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
+      o.connect(g).connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.23);
+    }catch(e){}
+  }
+  document.addEventListener("click", e => { if(e.target.closest("button")) playClick(); });
+
+  function showScreen(id){
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    qs(id).classList.add("active");
+  }
+  function setBadge(txt){ qs("sessionBadge").textContent = txt; }
+  function setConnection(txt, cls){
+    qs("connectionBadge").textContent = txt;
+    qs("connectionBadge").className = "badge " + (cls || "");
+  }
+  function overlay(title, body){
+    qs("overlayTitle").textContent = title;
+    qs("overlayBody").innerHTML = body;
+    qs("overlay").classList.add("show");
+  }
+  qs("overlayCloseBtn").onclick = () => qs("overlay").classList.remove("show");
+
+  function genCode(){
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let out = "";
+    for(let i=0;i<6;i++) out += chars[Math.floor(Math.random()*chars.length)];
+    return out;
+  }
+  function roomRef(path=""){ return ref(db, `${state.roomPath}${path ? "/" + path : ""}`); }
+  function saveSession(){
+    localStorage.setItem("mafia_session_v2", JSON.stringify({
+      roomCode: state.roomCode, roomPath: state.roomPath, role: state.role, playerId: state.playerId, playerName: state.playerName
+    }));
+    refreshSessionBadge();
+  }
+  function clearSession(){
+    localStorage.removeItem("mafia_session_v2");
+    state.roomCode = state.roomPath = state.role = state.playerId = state.playerName = null;
+    state.roomData = null;
+    refreshSessionBadge();
+  }
+  function refreshSessionBadge(){
+    const s = JSON.parse(localStorage.getItem("mafia_session_v2") || "null");
+    if(!s) return setBadge("세션 없음");
+    setBadge(`${s.role === "teacher" ? "교사" : "학생"} · ${s.roomCode}${s.playerName ? " · "+s.playerName : ""}`);
+  }
+  refreshSessionBadge();
+
+  function buildRoleConfig(){
+    const wrap = qs("roleConfig");
+    wrap.innerHTML = "";
+    Object.entries(ROLE_INFO).forEach(([key, info]) => {
+      const div = document.createElement("div");
+      div.className = "role-box";
+      div.innerHTML = `
+        <label>${info.label}</label>
+        <input type="number" min="0" value="${ROLE_DEFAULTS[key] || 0}" id="role_${key}">
+        <div class="tiny">${info.desc}</div>
+      `;
+      wrap.appendChild(div);
+    });
+  }
+  buildRoleConfig();
+
+  function getPlayers(data){
+    return Object.entries(data?.players || {}).map(([id, p]) => ({id, ...p}));
+  }
+  function alivePlayers(data){ return getPlayers(data).filter(p => p.alive !== false); }
+  function deadPlayers(data){ return getPlayers(data).filter(p => p.alive === false); }
+  function countByRole(data, role){
+    return alivePlayers(data).filter(p => p.role === role).length;
+  }
+  function isRole(player, role){ return player?.role === role; }
+  function playerById(data, id){ return (data?.players && data.players[id]) ? {id, ...data.players[id]} : null; }
+
+  function roleDesc(role){
+    const r = ROLE_INFO[role];
+    return r ? `${r.label}: ${r.desc}` : "역할 없음";
+  }
+
+  function renderTeacher(data){
+    state.roomData = data;
+    qs("teacherRoomTitle").textContent = data.meta?.title || "교사용 진행 화면";
+    qs("roomCodeBox").textContent = state.roomCode;
+    qs("phaseBanner").textContent = `현재 단계: ${phaseLabel(data.meta?.phase)} ${data.meta?.phase === "night" ? `· ${data.meta?.nightCount || 0}번째 밤` : `· ${data.meta?.dayCount || 0}일차`}`;
+    qs("aliveCount").textContent = alivePlayers(data).length;
+    qs("mafiaCount").textContent = countByRole(data, "mafia");
+    qs("citizenCount").textContent = alivePlayers(data).length - countByRole(data, "mafia");
+    qs("dayCount").textContent = data.meta?.dayCount || 0;
+
+    const plist = qs("teacherPlayerList");
+    plist.innerHTML = "";
+    getPlayers(data).sort((a,b)=> (a.joinedAt||0) - (b.joinedAt||0)).forEach(p => {
+      const blocked = !!(data.effects?.blockedForDay || {})[p.id];
+      const role = p.role ? ROLE_INFO[p.role]?.label : "미배정";
+      const item = document.createElement("div");
+      item.className = "item";
+      item.innerHTML = `
+        <div>
+          <div><strong>${escapeHtml(p.name || p.id)}</strong> ${p.alive === false ? "☠️" : "🙂"}</div>
+          <div class="tiny">${role} ${blocked ? "· 투표불가" : ""} ${p.connected ? "· 접속중" : "· 오프라인"}</div>
+        </div>
+        <div class="row">
+          <span class="pill ${p.alive === false ? "red" : "green"}">${p.alive === false ? "사망" : "생존"}</span>
+        </div>
+      `;
+      plist.appendChild(item);
+    });
+
+    const announcements = Object.values(data.announcements || {}).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    qs("announceList").innerHTML = announcements.length ? announcements.map(a =>
+      `<div class="announce"><strong>${escapeHtml(a.title || "공지")}</strong><div class="tiny">${escapeHtml(a.message || "")}</div></div>`
+    ).join("") : `<div class="muted">아직 로그가 없습니다.</div>`;
+
+    checkVictoryAndMaybeEnd(data);
+  }
+
+  function renderStudent(data){
+    state.roomData = data;
+    const me = playerById(data, state.playerId);
+    if(!me){ overlay("방 연결 해제", "이 방에서 내 참가 정보가 사라졌습니다."); return; }
+
+    qs("studentWelcome").textContent = `${me.name} 님`;
+    qs("studentRoomMeta").textContent = `${data.meta?.title || ""} · 코드 ${state.roomCode}`;
+    qs("studentPhaseBanner").textContent = `현재 단계: ${phaseLabel(data.meta?.phase)} ${data.meta?.phase === "night" ? `· ${data.meta?.nightCount || 0}번째 밤` : `· ${data.meta?.dayCount || 0}일차`}`;
+
+    const notices = Object.values(data.announcements || {}).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,10);
+    qs("studentNoticeList").innerHTML = notices.length ? notices.map(a => `<div class="announce"><strong>${escapeHtml(a.title || "공지")}</strong><div class="tiny">${escapeHtml(a.message || "")}</div></div>`).join("") : `<div class="muted">아직 공지가 없습니다.</div>`;
+
+    const blocked = !!(data.effects?.blockedForDay || {})[me.id];
+    const myStatusHtml = [
+      `<div class="item"><span>생존 여부</span><span class="pill ${me.alive === false ? "red":"green"}">${me.alive === false ? "사망":"생존"}</span></div>`,
+      `<div class="item"><span>역할</span><span class="pill blue">${ROLE_INFO[me.role]?.label || "미배정"}</span></div>`,
+      `<div class="item"><span>낮 투표 가능</span><span class="pill ${blocked || me.alive===false ? "red":"green"}">${blocked || me.alive===false ? "불가":"가능"}</span></div>`
+    ];
+    if(me.role === "soldier") myStatusHtml.push(`<div class="item"><span>군인 생존권</span><span class="pill gray">${me.soldierUsed ? "소진" : "보유"}</span></div>`);
+    if(me.role === "reporter") myStatusHtml.push(`<div class="item"><span>기자 취재권</span><span class="pill gray">${me.reporterUsed ? "소진" : "보유"}</span></div>`);
+    if(me.role === "priest") myStatusHtml.push(`<div class="item"><span>부활권</span><span class="pill gray">${me.priestUsed ? "소진" : "보유"}</span></div>`);
+    qs("myStatusBox").innerHTML = myStatusHtml.join("");
+
+    renderChats(data, me);
+    renderStudentActions(data, me);
+    revealQueuedEventsForMe(data, me);
+  }
+
+  function phaseLabel(phase){
+    return ({ lobby:"로비", day:"낮", night:"밤", ended:"게임 종료" })[phase] || phase || "로비";
+  }
+
+  function renderChats(data, me){
+    const globalMsgs = Object.values(data.chats?.global || {}).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    qs("globalChat").innerHTML = globalMsgs.map(m => `<div class="msg"><small>${escapeHtml(m.name || "익명")}</small>${escapeHtml(m.text || "")}</div>`).join("") || `<div class="muted">채팅이 없습니다.</div>`;
+    qs("globalChat").scrollTop = qs("globalChat").scrollHeight;
+
+    const isMafia = me.role === "mafia" && me.alive !== false;
+    qs("mafiaSection").classList.toggle("hidden", !(isMafia && data.meta?.phase === "night"));
+    const mafiaMsgs = Object.values(data.chats?.mafia || {}).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    qs("mafiaChat").innerHTML = mafiaMsgs.map(m => `<div class="msg"><small>${escapeHtml(m.name || "마피아")}</small>${escapeHtml(m.text || "")}</div>`).join("") || `<div class="muted">마피아 채팅이 없습니다.</div>`;
+    if(qs("mafiaChat")) qs("mafiaChat").scrollTop = qs("mafiaChat").scrollHeight;
+  }
+
+  function renderStudentActions(data, me){
+    const phase = data.meta?.phase;
+    const alive = me.alive !== false;
+    const blocked = !!(data.effects?.blockedForDay || {})[me.id];
+    const playersAlive = alivePlayers(data).filter(p => p.id !== me.id);
+    const allAlive = alivePlayers(data);
+    const dead = deadPlayers(data);
+    const actions = [];
+    const dayVotes = data.dayVotes || {};
+    const myDayVote = dayVotes[me.id]?.targetId || "";
+
+    if(phase === "day" && alive){
+      const options = allAlive.map(p => `<option value="${p.id}" ${myDayVote===p.id ? "selected":""}>${escapeHtml(p.name)}</option>`).join("");
+      actions.push(`
+        <div class="panel" style="padding:12px">
+          <h3>낮 사형투표</h3>
+          <div class="tiny">정교화 규칙: 사망자/투표금지자는 집계 제외, 정치인 투표는 2표, 동률은 무효, 정치인은 처형 면역.</div>
+          <div class="row" style="margin-top:10px">
+            <select id="dayVoteTarget">${options}</select>
+            <button ${blocked ? "disabled" : ""} id="submitDayVoteBtn">${blocked ? "건달에게 막혀 투표 불가" : "투표 제출"}</button>
+          </div>
+        </div>`);
+    }
+
+    if(phase === "night" && alive){
+      if(me.role === "mafia"){
+        const options = playersAlive.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join("");
+        actions.push(`
+          <div class="panel" style="padding:12px">
+            <h3>마피아 투표</h3>
+            <div class="tiny">마피아끼리 익명투표. 동률이면 무작위 희생자 결정.</div>
+            <div class="row" style="margin-top:10px">
+              <select id="mafiaVoteTarget">${options}</select>
+              <button id="submitMafiaVoteBtn">제출</button>
+            </div>
+          </div>`);
+      }
+      if(me.role === "police"){
+        actions.push(actionSelectCard("경찰 조사", "policeTarget", playersAlive, "submitPoliceBtn"));
+      }
+      if(me.role === "doctor"){
+        actions.push(actionSelectCard("의사 보호", "doctorTarget", allAlive, "submitDoctorBtn", me.id));
+      }
+      if(me.role === "thug"){
+        actions.push(actionSelectCard("건달 봉쇄", "thugTarget", playersAlive, "submitThugBtn"));
+      }
+      if(me.role === "terrorist"){
+        actions.push(actionSelectCard("테러리스트 타겟", "terrorTarget", playersAlive, "submitTerrorBtn"));
+      }
+      if(me.role === "reporter"){
+        const canUse = (data.meta?.nightCount || 0) >= 2 && !me.reporterUsed;
+        actions.push(actionSelectCard("기자 취재", "reporterTarget", playersAlive, "submitReporterBtn", null, canUse ? "" : "두 번째 밤부터 1회만 사용 가능"));
+      }
+      if(me.role === "medium"){
+        actions.push(actionSelectCard("영매 확인", "mediumTarget", dead, "submitMediumBtn", null, dead.length ? "" : "죽은 사람이 있어야 확인 가능"));
+      }
+      if(me.role === "priest"){
+        const canUse = !me.priestUsed && dead.length;
+        actions.push(actionSelectCard("성직자 부활", "priestTarget", dead, "submitPriestBtn", null, canUse ? "" : "죽은 사람이 있어야 하며 1회만 사용"));
+      }
+    }
+
+    qs("studentActions").innerHTML = actions.join("") || `<div class="panel"><div class="muted">지금 할 수 있는 행동이 없습니다.</div></div>`;
+
+    bindActionButtons();
+  }
+
+  function actionSelectCard(title, selectId, arr, btnId, includeSelectedId = null, disabledReason = ""){
+    const options = (arr || []).map(p => `<option value="${p.id}" ${includeSelectedId===p.id ? "selected":""}>${escapeHtml(p.name)}</option>`).join("");
+    const disabled = disabledReason || !arr?.length;
+    return `
+      <div class="panel" style="padding:12px">
+        <h3>${title}</h3>
+        <div class="row" style="margin-top:10px">
+          <select id="${selectId}" ${disabled ? "disabled" : ""}>${options || `<option value="">대상 없음</option>`}</select>
+          <button id="${btnId}" ${disabled ? "disabled" : ""}>${disabled ? escapeHtml(disabledReason || "불가") : "제출"}</button>
+        </div>
+      </div>`;
+  }
+
+  function bindActionButtons(){
+    const bind = (id, fn) => { const el = qs(id); if(el) el.onclick = fn; };
+    bind("submitDayVoteBtn", async () => submitDayVote(qs("dayVoteTarget").value));
+    bind("submitMafiaVoteBtn", async () => submitNightAction("mafiaVotes", qs("mafiaVoteTarget").value));
+    bind("submitPoliceBtn", async () => submitNightAction("policeChecks", qs("policeTarget").value));
+    bind("submitDoctorBtn", async () => submitNightAction("doctorProtects", qs("doctorTarget").value));
+    bind("submitThugBtn", async () => submitNightAction("thugBlocks", qs("thugTarget").value));
+    bind("submitTerrorBtn", async () => submitNightAction("terrorTargets", qs("terrorTarget").value));
+    bind("submitReporterBtn", async () => submitNightAction("reporterTargets", qs("reporterTarget").value));
+    bind("submitMediumBtn", async () => submitNightAction("mediumTargets", qs("mediumTarget").value));
+    bind("submitPriestBtn", async () => submitNightAction("priestTargets", qs("priestTarget").value));
+  }
+
+  async function createRoom(){
+    const teacherName = qs("teacherName").value.trim() || "교사";
+    const title = qs("roomTitle").value.trim() || "클래스룸 마피아";
+    const roleCounts = {};
+    Object.keys(ROLE_INFO).forEach(key => roleCounts[key] = Number(qs(`role_${key}`).value || 0));
+    const code = genCode();
+    state.roomCode = code;
+    state.roomPath = `rooms/${code}`;
+    state.role = "teacher";
+    state.playerId = `teacher_${Date.now()}`;
+    state.playerName = teacherName;
+
+    const payload = {
+      meta: {
+        code, title, hostName: teacherName, phase:"lobby", dayCount:0, nightCount:0,
+        createdAt: Date.now(), status:"open"
+      },
+      config: { roleCounts },
+      players: {},
+      effects: { blockedForDay:{} },
+      announcements: {},
+      chats: { global:{}, mafia:{} },
+      dayVotes: {},
+      nightActions: {},
+      events: {}
+    };
+    await set(roomRef(), payload);
+    await push(roomRef("announcements"), { title:"방 생성", message:`${teacherName} 선생님이 방을 만들었습니다.`, createdAt: Date.now() });
+    saveSession();
+    subscribeRoom();
+    showScreen("screen-teacher-room");
+  }
+
+  async function joinRoom(){
+    const code = qs("joinCode").value.trim().toUpperCase();
+    const name = qs("joinName").value.trim();
+    if(!code || !name) return overlay("입장 실패", "방 코드와 이름을 입력해 주세요.");
+    const snap = await get(ref(db, `rooms/${code}`));
+    if(!snap.exists()) return overlay("입장 실패", "해당 방이 존재하지 않습니다.");
+    const data = snap.val();
+    if(data.meta?.status === "closed") return overlay("입장 실패", "이미 종료된 방입니다.");
+
+    const playerId = `p_${Math.random().toString(36).slice(2,10)}`;
+    state.roomCode = code;
+    state.roomPath = `rooms/${code}`;
+    state.role = "student";
+    state.playerId = playerId;
+    state.playerName = name;
+
+    await set(roomRef(`players/${playerId}`), {
+      name, alive:true, connected:true, joinedAt: Date.now(), role:null
+    });
+    onDisconnect(roomRef(`players/${playerId}/connected`)).set(false);
+    await push(roomRef("announcements"), { title:"학생 입장", message:`${name} 님이 입장했습니다.`, createdAt: Date.now() });
+    saveSession();
+    startHeartbeat();
+    subscribeRoom();
+    showScreen("screen-student-room");
+  }
+
+  async function autoReconnect(){
+    const s = JSON.parse(localStorage.getItem("mafia_session_v2") || "null");
+    if(!s?.roomCode || !s?.roomPath) return overlay("세션 없음", "복구할 방 정보가 없습니다.");
+    state = { ...state, ...s };
+    const snap = await get(ref(db, s.roomPath));
+    if(!snap.exists()) { clearSession(); return overlay("복구 실패", "방이 존재하지 않습니다."); }
+    if(s.role === "student" && s.playerId){
+      const pSnap = await get(ref(db, `${s.roomPath}/players/${s.playerId}`));
+      if(pSnap.exists()){
+        await update(ref(db, `${s.roomPath}/players/${s.playerId}`), { connected:true, lastSeen: Date.now() });
+        onDisconnect(ref(db, `${s.roomPath}/players/${s.playerId}/connected`)).set(false);
+      }
+      startHeartbeat();
+      subscribeRoom();
+      showScreen("screen-student-room");
+    }else if(s.role === "teacher"){
+      subscribeRoom();
+      showScreen("screen-teacher-room");
+    }
+  }
+
+  function startHeartbeat(){
+    stopHeartbeat();
+    if(state.role !== "student" || !state.playerId) return;
+    state.heartbeat = setInterval(async ()=>{
+      try{ await update(roomRef(`players/${state.playerId}`), { connected:true, lastSeen: Date.now() }); }catch(e){}
+    }, 15000);
+  }
+  function stopHeartbeat(){ if(state.heartbeat) clearInterval(state.heartbeat); state.heartbeat = null; }
+
+  function subscribeRoom(){
+    state.unsubscribers.forEach(fn => fn && fn());
+    state.unsubscribers = [];
+    const off = onValue(roomRef(), snap => {
+      setConnection("연결됨", "green");
+      const data = snap.val();
+      if(!data){ overlay("방 종료", "방이 삭제되었거나 종료되었습니다."); return; }
+      if(state.role === "teacher") renderTeacher(data);
+      else renderStudent(data);
+    }, err => {
+      setConnection("연결 오류", "red");
+      console.error(err);
+    });
+    state.unsubscribers.push(() => off());
+  }
+
+  async function leaveRoom(){
+    if(state.role === "student" && state.playerId){
+      try{
+        await push(roomRef("announcements"), { title:"학생 퇴장", message:`${state.playerName} 님이 방을 나갔습니다.`, createdAt: Date.now() });
+        await remove(roomRef(`players/${state.playerId}`));
+      }catch(e){}
+    }
+    stopHeartbeat();
+    state.unsubscribers.forEach(fn => fn && fn());
+    state.unsubscribers = [];
+    clearSession();
+    showScreen("screen-home");
+  }
+
+  async function closeRoom(){
+    if(!state.roomPath) return;
+    await push(roomRef("announcements"), { title:"방 종료", message:"교사가 방을 종료했습니다.", createdAt: Date.now() });
+    await update(roomRef("meta"), { status:"closed", phase:"ended", endedAt: Date.now() });
+    state.unsubscribers.forEach(fn => fn && fn());
+    state.unsubscribers = [];
+    stopHeartbeat();
+    clearSession();
+    showScreen("screen-home");
+  }
+
+  async function assignRoles(){
+    const snap = await get(roomRef());
+    const data = snap.val();
+    const players = getPlayers(data);
+    const roleCounts = data.config?.roleCounts || {};
+    let rolePool = [];
+    Object.entries(roleCounts).forEach(([role, cnt]) => { for(let i=0;i<cnt;i++) rolePool.push(role); });
+    if(players.length < rolePool.length) return overlay("역할 배정 실패", `학생 수가 부족합니다. 필요 ${rolePool.length}명, 현재 ${players.length}명`);
+    shuffle(rolePool);
+    const updates = {};
+    players.forEach((p, idx) => {
+      updates[`players/${p.id}/role`] = rolePool[idx] || "citizen";
+      updates[`players/${p.id}/alive`] = true;
+      updates[`players/${p.id}/soldierUsed`] = false;
+      updates[`players/${p.id}/reporterUsed`] = false;
+      updates[`players/${p.id}/priestUsed`] = false;
+      updates[`players/${p.id}/terrorTargetId`] = null;
+      updates[`players/${p.id}/lastEventSeen`] = 0;
+    });
+    await update(roomRef(), updates);
+    await push(roomRef("announcements"), { title:"역할 배정", message:"역할 배정이 완료되었습니다. 학생들은 '내 역할 보기'를 눌러 확인하세요.", createdAt: Date.now() });
+  }
+
+  async function startDay(){
+    const data = (await get(roomRef())).val();
+    const nextDay = (data.meta?.dayCount || 0) + 1;
+    await update(roomRef(), {
+      dayVotes: {},
+      "effects/blockedForDay": data.effects?.blockedPending || {},
+      "effects/blockedPending": {},
+      "meta/phase": "day",
+      "meta/dayCount": nextDay
+    });
+    await push(roomRef("announcements"), { title:`${nextDay}일차 낮`, message:"낮 토론과 사형투표를 진행하세요.", createdAt: Date.now() });
+  }
+
+  async function startNight(){
+    const data = (await get(roomRef())).val();
+    const nextNight = (data.meta?.nightCount || 0) + 1;
+    await update(roomRef(), {
+      nightActions: {},
+      "meta/phase": "night",
+      "meta/nightCount": nextNight
+    });
+    await push(roomRef("announcements"), { title:`${nextNight}번째 밤`, message:"각자 밤 행동을 제출하세요.", createdAt: Date.now() });
+  }
+
+  async function submitDayVote(targetId){
+    const snap = await get(roomRef());
+    const data = snap.val();
+    const me = playerById(data, state.playerId);
+    if(data.meta?.phase !== "day") return overlay("투표 불가", "지금은 낮 투표 시간이 아닙니다.");
+    if(!me || me.alive === false) return overlay("투표 불가", "사망자는 투표할 수 없습니다.");
+    if((data.effects?.blockedForDay || {})[state.playerId]) return overlay("투표 불가", "건달 효과로 이번 낮 투표에 참여할 수 없습니다.");
+    if(!playerById(data, targetId) || playerById(data, targetId).alive === false) return overlay("투표 불가", "유효한 생존자를 선택하세요.");
+    await set(roomRef(`dayVotes/${state.playerId}`), { voterId: state.playerId, targetId, createdAt: Date.now() });
+    overlay("투표 완료", "낮 투표가 제출되었습니다.");
+  }
+
+  async function resolveDayVotes(){
+    const snap = await get(roomRef());
+    const data = snap.val();
+    if(data.meta?.phase !== "day") return overlay("집계 불가", "지금은 낮이 아닙니다.");
+
+    const players = getPlayers(data);
+    const aliveSet = new Set(alivePlayers(data).map(p => p.id));
+    const blocked = data.effects?.blockedForDay || {};
+    const ballots = Object.values(data.dayVotes || {});
+    const tally = {};
+    const validBallots = [];
+
+    for(const ballot of ballots){
+      const voter = playerById(data, ballot.voterId);
+      const target = playerById(data, ballot.targetId);
+      if(!voter || !target) continue;
+      if(!aliveSet.has(voter.id) || !aliveSet.has(target.id)) continue;
+      if(blocked[voter.id]) continue;
+      const weight = voter.role === "politician" ? 2 : 1;
+      tally[target.id] = (tally[target.id] || 0) + weight;
+      validBallots.push({ voter: voter.name, target: target.name, weight });
+    }
+
+    if(!validBallots.length){
+      await push(roomRef("announcements"), { title:"낮 투표 결과", message:"유효 투표가 없어 아무도 처형되지 않았습니다.", createdAt: Date.now() });
+      await checkVictoryAndMaybeEnd((await get(roomRef())).val());
+      return;
+    }
+
+    const sorted = Object.entries(tally).sort((a,b) => b[1]-a[1]);
+    const topScore = sorted[0][1];
+    const topTargets = sorted.filter(([_, score]) => score === topScore).map(([id]) => id);
+
+    let message = `유효 투표 ${validBallots.length}건 집계 완료. `;
+    validBallots.forEach(v => { message += `${v.voter}→${v.target}${v.weight===2 ? "(2표)" : ""}, `; });
+
+    if(topTargets.length > 1){
+      message += `최다 득표 동률로 처형이 무효가 되었습니다.`;
+      await push(roomRef("announcements"), { title:"낮 투표 결과", message, createdAt: Date.now() });
+      await checkVictoryAndMaybeEnd((await get(roomRef())).val());
+      return;
+    }
+
+    const target = playerById(data, topTargets[0]);
+    if(target.role === "politician"){
+      message += `${target.name} 님은 정치인이라 처형되지 않았습니다.`;
+      await push(roomRef("announcements"), { title:"낮 투표 결과", message, createdAt: Date.now() });
+      await queueEventForAll("정치인 면역", `${target.name} 님은 정치인이라 처형을 면했습니다.`);
+      await checkVictoryAndMaybeEnd((await get(roomRef())).val());
+      return;
+    }
+
+    await killPlayer(target.id, "dayVote", `${target.name} 님이 낮 투표로 처형되었습니다.`, { revealRole:true });
+    message += `${target.name} 처형.`;
+    await push(roomRef("announcements"), { title:"낮 투표 결과", message, createdAt: Date.now() });
+
+    const fresh = (await get(roomRef())).val();
+    const freshTarget = playerById(fresh, target.id);
+    if(freshTarget?.role === "terrorist" && freshTarget?.terrorTargetId){
+      const t2 = playerById(fresh, freshTarget.terrorTargetId);
+      if(t2 && t2.alive !== false){
+        await killPlayer(t2.id, "terrorist", `${freshTarget.name} 님이 테러리스트여서 ${t2.name} 님도 함께 사망했습니다.`, { revealRole:true });
+      }
+    }
+    await checkVictoryAndMaybeEnd((await get(roomRef())).val());
+  }
+
+  async function submitNightAction(bucket, targetId){
+    const snap = await get(roomRef());
+    const data = snap.val();
+    if(data.meta?.phase !== "night") return overlay("행동 불가", "지금은 밤이 아닙니다.");
+    const me = playerById(data, state.playerId);
+    if(!me || me.alive === false) return overlay("행동 불가", "사망자는 밤 행동을 할 수 없습니다.");
+    if(bucket === "reporterTargets" && ((data.meta?.nightCount || 0) < 2 || me.reporterUsed)) return overlay("행동 불가", "기자는 두 번째 밤부터 1회만 가능합니다.");
+    if(bucket === "priestTargets" && me.priestUsed) return overlay("행동 불가", "성직자 능력은 1회만 가능합니다.");
+    if(bucket === "terrorTargets"){
+      await update(roomRef(`players/${me.id}`), { terrorTargetId: targetId });
+    }
+    await set(roomRef(`nightActions/${bucket}/${state.playerId}`), { actorId: state.playerId, targetId, createdAt: Date.now() });
+    overlay("제출 완료", "밤 행동이 제출되었습니다.");
+  }
+
+  async function resolveNight(){
+    const snap = await get(roomRef());
+    const data = snap.val();
+    if(data.meta?.phase !== "night") return overlay("처리 불가", "지금은 밤이 아닙니다.");
+
+    const acts = data.nightActions || {};
+    const mafiaVotes = Object.values(acts.mafiaVotes || {});
+    const policeChecks = Object.values(acts.policeChecks || {});
+    const doctorProtects = Object.values(acts.doctorProtects || {});
+    const thugBlocks = Object.values(acts.thugBlocks || {});
+    const reporterTargets = Object.values(acts.reporterTargets || {});
+    const mediumTargets = Object.values(acts.mediumTargets || {});
+    const priestTargets = Object.values(acts.priestTargets || {});
+    const alive = alivePlayers(data);
+
+    // 1) 건달: 다음 낮 투표 봉쇄 대상 설정
+    const blockedPending = {};
+    thugBlocks.forEach(a => {
+      const actor = playerById(data, a.actorId); const target = playerById(data, a.targetId);
+      if(actor?.alive !== false && actor?.role === "thug" && target?.alive !== false) blockedPending[target.id] = true;
+    });
+    await update(roomRef("effects"), { ...(data.effects || {}), blockedPending });
+
+    // 2) 의사 보호
+    const protectedIds = new Set();
+    doctorProtects.forEach(a => {
+      const actor = playerById(data, a.actorId); const target = playerById(data, a.targetId);
+      if(actor?.alive !== false && actor?.role === "doctor" && target?.alive !== false) protectedIds.add(target.id);
+    });
+
+    // 3) 마피아 살해 투표
+    let mafiaKillTargetId = null;
+    const mafiaTally = {};
+    mafiaVotes.forEach(a => {
+      const actor = playerById(data, a.actorId); const target = playerById(data, a.targetId);
+      if(actor?.alive !== false && actor?.role === "mafia" && target?.alive !== false){
+        mafiaTally[target.id] = (mafiaTally[target.id] || 0) + 1;
+      }
+    });
+    const sorted = Object.entries(mafiaTally).sort((a,b)=>b[1]-a[1]);
+    if(sorted.length){
+      const max = sorted[0][1];
+      const candidates = sorted.filter(([,n])=>n===max).map(([id])=>id);
+      mafiaKillTargetId = candidates[Math.floor(Math.random()*candidates.length)];
+    }
+
+    if(mafiaKillTargetId && !protectedIds.has(mafiaKillTargetId)){
+      const victim = playerById(data, mafiaKillTargetId);
+      if(victim?.role === "soldier" && !victim.soldierUsed){
+        await update(roomRef(`players/${victim.id}`), { soldierUsed:true });
+        const mafias = alive.filter(p => p.role === "mafia");
+        if(mafias.length){
+          const revealed = mafias[Math.floor(Math.random()*mafias.length)];
+          await queueEvent(victim.id, "군인 생존", `마피아 공격을 버텼습니다. 마피아 중 한 명은 <strong>${escapeHtml(revealed.name)}</strong> 입니다.`);
+        }else{
+          await queueEvent(victim.id, "군인 생존", `마피아 공격을 버텼습니다.`);
+        }
+        await push(roomRef("announcements"), { title:"밤 결과", message:`${victim.name} 님이 공격받았지만 살아남았습니다.`, createdAt: Date.now() });
+      }else{
+        await killPlayer(victim.id, "mafia", `${victim.name} 님이 밤에 희생되었습니다.`, { revealRole:true });
+      }
+    }else if(mafiaKillTargetId && protectedIds.has(mafiaKillTargetId)){
+      const victim = playerById(data, mafiaKillTargetId);
+      await push(roomRef("announcements"), { title:"밤 결과", message:`누군가 ${victim?.name || "대상"} 님을 노렸지만 의사의 보호로 살아남았습니다.`, createdAt: Date.now() });
+    }
+
+    // 4) 경찰 개인 알림
+    for(const a of policeChecks){
+      const actor = playerById(data, a.actorId); const target = playerById(data, a.targetId);
+      if(actor?.alive !== false && actor?.role === "police" && target){
+        await queueEvent(actor.id, "경찰 조사 결과", `${target.name} 님은 <strong>${target.role === "mafia" ? "마피아" : "마피아가 아님"}</strong>`);
+      }
+    }
+
+    // 5) 기자 공개
+    for(const a of reporterTargets){
+      const actor = playerById(data, a.actorId); const target = playerById(data, a.targetId);
+      if(actor?.alive !== false && actor?.role === "reporter" && target && !actor.reporterUsed && (data.meta?.nightCount || 0) >= 2){
+        await update(roomRef(`players/${actor.id}`), { reporterUsed:true });
+        await push(roomRef("announcements"), { title:"기자 특종", message:`${target.name} 님의 역할은 ${ROLE_INFO[target.role]?.label || target.role} 입니다.`, createdAt: Date.now() });
+        await queueEventForAll("기자 특종", `${target.name} 님의 역할은 <strong>${ROLE_INFO[target.role]?.label || target.role}</strong> 입니다.`);
+      }
+    }
+
+    // 6) 영매 개인 알림
+    const fresh1 = (await get(roomRef())).val();
+    for(const a of mediumTargets){
+      const actor = playerById(fresh1, a.actorId); const target = playerById(fresh1, a.targetId);
+      if(actor?.alive !== false && actor?.role === "medium" && target?.alive === false){
+        await queueEvent(actor.id, "영매 확인", `${target.name} 님의 역할은 <strong>${ROLE_INFO[target.role]?.label || target.role}</strong> 입니다.`);
+      }
+    }
+
+    // 7) 성직자 부활
+    let refreshed = (await get(roomRef())).val();
+    for(const a of priestTargets){
+      const actor = playerById(refreshed, a.actorId); const target = playerById(refreshed, a.targetId);
+      if(actor?.alive !== false && actor?.role === "priest" && !actor.priestUsed && target?.alive === false){
+        await update(roomRef(), {
+          [`players/${actor.id}/priestUsed`]: true,
+          [`players/${target.id}/alive`]: true
+        });
+        await push(roomRef("announcements"), { title:"부활", message:`${target.name} 님이 성직자의 힘으로 부활했습니다.`, createdAt: Date.now() });
+        await queueEventForAll("부활", `<strong>${escapeHtml(target.name)}</strong> 님이 되살아났습니다.`);
+        refreshed = (await get(roomRef())).val();
+      }
+    }
+
+    await checkVictoryAndMaybeEnd((await get(roomRef())).val());
+  }
+
+  async function killPlayer(playerId, cause, message, options={}){
+    const snap = await get(roomRef());
+    const data = snap.val();
+    const target = playerById(data, playerId);
+    if(!target || target.alive === false) return;
+    await update(roomRef(`players/${playerId}`), { alive:false, deathCause:cause });
+    if(options.revealRole){
+      await queueEventForAll("사망", `<strong>${escapeHtml(target.name)}</strong> 님이 사망했습니다.<br>역할: <span class="role-name">${escapeHtml(ROLE_INFO[target.role]?.label || target.role)}</span>`);
+    }
+    await push(roomRef("announcements"), { title:"사망", message, createdAt: Date.now() });
+  }
+
+  async function queueEvent(playerId, title, body){
+    await push(roomRef(`events/${playerId}`), { title, body, createdAt: Date.now() });
+  }
+  async function queueEventForAll(title, body){
+    const data = (await get(roomRef())).val();
+    const players = getPlayers(data);
+    for(const p of players){
+      await queueEvent(p.id, title, body);
+    }
+  }
+
+  function revealQueuedEventsForMe(data, me){
+    const myEvents = Object.entries(data.events?.[me.id] || {}).map(([id, v])=>({id, ...v})).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    const seen = me.lastEventSeen || 0;
+    const unseen = myEvents.filter(e => (e.createdAt || 0) > seen);
+    if(unseen.length){
+      const latest = unseen[unseen.length - 1];
+      overlay(latest.title || "알림", latest.body || "");
+      update(roomRef(`players/${me.id}`), { lastEventSeen: latest.createdAt || Date.now() });
+    }
+  }
+
+  async function checkVictoryAndMaybeEnd(data){
+    if(!data || data.meta?.phase === "ended") return false;
+    const alive = alivePlayers(data);
+    const mafiaAlive = alive.filter(p => p.role === "mafia").length;
+    const nonMafiaAlive = alive.length - mafiaAlive;
+
+    if(mafiaAlive <= 0){
+      await update(roomRef("meta"), { phase:"ended", winner:"citizen", endedAt: Date.now() });
+      await push(roomRef("announcements"), { title:"게임 종료", message:"시민팀 승리! 모든 마피아가 제거되었습니다.", createdAt: Date.now() });
+      await queueEventForAll("시민팀 승리", "모든 마피아가 제거되어 시민팀이 승리했습니다.");
+      return true;
+    }
+    if(mafiaAlive >= nonMafiaAlive){
+      await update(roomRef("meta"), { phase:"ended", winner:"mafia", endedAt: Date.now() });
+      await push(roomRef("announcements"), { title:"게임 종료", message:"마피아팀 승리! 마피아 수가 다른 생존자 수와 같거나 많아졌습니다.", createdAt: Date.now() });
+      await queueEventForAll("마피아팀 승리", "마피아 수가 다른 생존자 수와 같거나 많아져 마피아팀이 승리했습니다.");
+      return true;
+    }
+    return false;
+  }
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr;
+  }
+  function escapeHtml(str){
+    return String(str ?? "").replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  }
+
+  // chat
+  async function sendChat(kind){
+    const input = kind === "global" ? qs("globalChatInput") : qs("mafiaChatInput");
+    const text = input.value.trim();
+    if(!text) return;
+    const snap = await get(roomRef());
+    const data = snap.val();
+    const me = playerById(data, state.playerId);
+    if(!me) return;
+    if(kind === "mafia"){
+      if(me.role !== "mafia" || me.alive === false || data.meta?.phase !== "night") return overlay("전송 불가", "마피아 밤 채팅만 가능합니다.");
+    }
+    await push(roomRef(`chats/${kind}`), { name: me.name, text, createdAt: Date.now() });
+    input.value = "";
+  }
+
+  // notices
+  async function sendNotice(){
+    const text = qs("teacherNotice").value.trim();
+    if(!text) return;
+    await push(roomRef("announcements"), { title:"교사 공지", message:text, createdAt: Date.now() });
+    qs("teacherNotice").value = "";
+  }
+
+  // UI events
+  qs("gotoTeacherBtn").onclick = () => showScreen("screen-teacher-setup");
+  qs("gotoStudentBtn").onclick = () => showScreen("screen-student-join");
+  qs("backHome1").onclick = () => showScreen("screen-home");
+  qs("backHome2").onclick = () => showScreen("screen-home");
+
+  qs("createRoomBtn").onclick = createRoom;
+  qs("joinRoomBtn").onclick = joinRoom;
+  qs("assignRolesBtn").onclick = assignRoles;
+  qs("startDayBtn").onclick = startDay;
+  qs("startNightBtn").onclick = startNight;
+  qs("resolveDayBtn").onclick = resolveDayVotes;
+  qs("resolveNightBtn").onclick = resolveNight;
+  qs("closeRoomBtn").onclick = closeRoom;
+  qs("leaveRoomBtn").onclick = leaveRoom;
+  qs("reconnectBtn").onclick = autoReconnect;
+  qs("sendGlobalChatBtn").onclick = () => sendChat("global");
+  qs("sendMafiaChatBtn").onclick = () => sendChat("mafia");
+  qs("sendNoticeBtn").onclick = sendNotice;
+  qs("showRoleBtn").onclick = async () => {
+    const snap = await get(roomRef());
+    const me = playerById(snap.val(), state.playerId);
+    if(!me?.role) return overlay("역할 미배정", "아직 교사가 역할을 배정하지 않았습니다.");
+    overlay("내 역할", `<div class="role-name">${ROLE_INFO[me.role]?.label}</div><div style="margin-top:10px">${escapeHtml(ROLE_INFO[me.role]?.desc)}</div>`);
+  };
+
+  window.addEventListener("online", autoReconnect);
+  document.addEventListener("visibilitychange", () => { if(document.visibilityState === "visible") autoReconnect(); });
+  setConnection(navigator.onLine ? "대기 중" : "오프라인", navigator.onLine ? "blue" : "red");
+  if(localStorage.getItem("mafia_session_v2")) autoReconnect();
+</script>
 </body>
 </html>
