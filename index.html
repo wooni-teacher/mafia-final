@@ -56,38 +56,6 @@
     .btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);}
     .hidden{display:none !important;}
 
-    .teacher-layout .app{max-width:1680px;}
-    .teacher-layout #roomView > .grid.main{grid-template-columns:1fr;gap:18px;}
-    .teacher-layout .hero{grid-template-columns:minmax(360px, 460px) 1fr;align-items:stretch;}
-    .teacher-layout .status-box{grid-template-columns:repeat(4,1fr);}
-    .teacher-layout .teacher-shell{display:grid;gap:18px;grid-template-columns:minmax(0,1.45fr) minmax(340px,.75fr);align-items:start;}
-    .teacher-layout .teacher-main{display:grid;gap:18px;}
-    .teacher-layout .teacher-side{display:grid;gap:18px;position:sticky;top:16px;}
-    .teacher-layout .teacher-main-grid{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr));}
-    .teacher-layout .player-list{grid-template-columns:1fr;}
-    .teacher-layout .student-panels{display:none;}
-    .teacher-panel{padding:20px;}
-    .teacher-panel-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px;}
-    .teacher-panel-title{font-size:24px;font-weight:1000;letter-spacing:-.02em;}
-    .teacher-panel-sub{color:var(--sub);font-size:13px;font-weight:700;}
-    .teacher-chip-row{display:flex;flex-wrap:wrap;gap:8px;}
-    .teacher-chip{padding:8px 12px;border-radius:999px;background:rgba(79,140,255,.1);border:1px solid rgba(79,140,255,.18);color:#dbe7ff;font-size:12px;font-weight:900;}
-    .teacher-section{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:16px;}
-    .teacher-section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
-    .teacher-section-title{font-size:16px;font-weight:900;}
-    .teacher-section-desc{color:var(--sub);font-size:12px;font-weight:700;}
-    .teacher-stack{display:grid;gap:12px;}
-    .teacher-main-actions{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr));}
-    .teacher-main-actions .wide{grid-column:1/-1;}
-    .teacher-actions-compact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-    .teacher-actions-compact.three{grid-template-columns:repeat(3,minmax(0,1fr));}
-    .teacher-panel .btn-blue,.teacher-panel .btn-green,.teacher-panel .btn-purple{background:linear-gradient(180deg,#5f92ff,#3f78f7);color:#fff;}
-    .teacher-panel .btn-yellow,.teacher-panel .btn-gray,.teacher-panel .btn-ghost{background:#243047;border:1px solid var(--line);color:#eef4ff;}
-    .teacher-panel .btn-red{background:linear-gradient(180deg,#f26b6b,#df4a4a);color:#fff;}
-    .teacher-panel button{padding:13px 14px;}
-    .teacher-highlight{padding:12px 14px;border-radius:14px;background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.16);}
-    .teacher-select-note{font-size:12px;color:var(--sub);font-weight:700;}
-
     .hero{display:grid;gap:14px;grid-template-columns:1fr;}
     .timer-box{width:100%;border-radius:20px;background:linear-gradient(180deg,#1a1f30,#0e1320);border:1px solid var(--line);padding:18px;text-align:center;box-shadow:var(--shadow);}
     .timer-mode{font-size:18px;font-weight:900;color:#d7e1ff;margin-bottom:8px;}
@@ -154,17 +122,91 @@
       .row.two{grid-template-columns:1fr 1fr;}
       .player-list{grid-template-columns:1fr 1fr;}
     }
-    @media (max-width: 1199px){
-      .teacher-layout .hero{grid-template-columns:1fr;}
-      .teacher-layout .teacher-shell{grid-template-columns:1fr;}
-      .teacher-layout .teacher-side{position:static;}
-      .teacher-layout .teacher-main-grid{grid-template-columns:1fr;}
-      .teacher-layout .status-box{grid-template-columns:1fr 1fr;}
+  
+    @font-face{
+      font-family:"GangwonEdu";
+      src:url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff") format("woff");
+      font-weight:700;
+      font-style:normal;
     }
-    @media (max-width: 720px){
-      .teacher-main-actions,.teacher-actions-compact,.teacher-actions-compact.three{grid-template-columns:1fr;}
-      .teacher-layout .status-box{grid-template-columns:1fr;}
+    :root{
+      --bg:#090b11;
+      --panel:#121521;
+      --panel2:#191d2a;
+      --line:rgba(255,255,255,.08);
+      --text:#f5f2ee;
+      --sub:#a8acb8;
+      --blue:#5e86ff;
+      --green:#3cbf86;
+      --red:#d14b57;
+      --yellow:#e0b357;
+      --purple:#8a6cff;
+      --accent:#7a0f1e;
+      --shadow:0 14px 40px rgba(0,0,0,.36);
+      --radius:18px;
     }
+    html,body{
+      font-family:"GangwonEdu","Noto Sans KR",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(122,15,30,.28), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(94,134,255,.10), transparent 25%),
+        linear-gradient(180deg,#090b11 0%, #0d1018 55%, #141925 100%);
+      color:var(--text);
+    }
+    body{position:relative;overflow-x:hidden;}
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.48)),
+        repeating-linear-gradient(135deg, rgba(255,255,255,.015) 0 2px, transparent 2px 12px);
+      pointer-events:none;
+      mix-blend-mode:screen;
+    }
+    .app{max-width:1440px;position:relative;z-index:1;}
+    .brand{letter-spacing:.01em;text-shadow:0 0 18px rgba(122,15,30,.35);}
+    .card,.timer-box,.stat{backdrop-filter:blur(8px);}
+    .card{
+      background:
+        linear-gradient(180deg, rgba(22,27,40,.92), rgba(14,18,28,.96)),
+        radial-gradient(circle at top right, rgba(122,15,30,.14), transparent 35%);
+    }
+    .pill{background:rgba(255,255,255,.045)}
+    .btn-blue,.btn-green,.btn-red,.btn-yellow,.btn-purple,.btn-gray,.btn-ghost{
+      min-height:50px;
+      transition:transform .15s ease, filter .15s ease, opacity .15s ease;
+    }
+    button:hover{transform:translateY(-1px);filter:brightness(1.04);}
+    .btn-yellow{color:#241700;}
+    .grid.main.teacher-layout{grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);align-items:start;}
+    .teacher-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+    .summary-chip{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.04);}
+    .summary-chip .small{display:block;margin-bottom:6px}
+    .summary-chip strong{font-size:19px}
+    .quickbar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+    .teacher-group{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);overflow:hidden;}
+    .teacher-group summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:900;background:rgba(255,255,255,.03);}
+    .teacher-group summary::-webkit-details-marker{display:none;}
+    .teacher-group .group-body{padding:14px;}
+    .vote-result{white-space:pre-wrap;line-height:1.45;}
+    .teacher-note{padding:12px 14px;border-radius:14px;background:rgba(209,75,87,.08);border:1px solid rgba(209,75,87,.2);color:#ffd8db;margin-bottom:12px;}
+    .announce-banner{
+      position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+      z-index:60; min-width:min(92vw,680px); max-width:92vw;
+      padding:16px 18px; border-radius:18px; border:1px solid rgba(255,255,255,.1);
+      background:linear-gradient(180deg, rgba(33,16,21,.94), rgba(17,11,16,.97));
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      font-size:18px; font-weight:900; text-align:center; letter-spacing:.01em;
+    }
+    .announce-banner.hidden{display:none;}
+    @media (max-width: 1100px){
+      .grid.main.teacher-layout{grid-template-columns:1fr;}
+    }
+    @media (max-width: 760px){
+      .teacher-summary{grid-template-columns:1fr 1fr;}
+      .quickbar{grid-template-columns:1fr 1fr;}
+    }
+
   </style>
 </head>
 <body>
@@ -227,8 +269,8 @@
 
       <div class="footer-gap"></div>
 
-      <div class="grid main">
-        <div class="grid student-panels">
+      <div id="mainGrid" class="grid main">
+        <div class="grid">
           <div class="card">
             <div class="section-title">내 메뉴</div>
             <div class="actions">
@@ -259,176 +301,146 @@
             </div>
           </div>
 
-          
-          <div id="teacherPanel" class="card teacher-panel hidden">
-            <div class="teacher-panel-header">
-              <div>
-                <div class="teacher-panel-title">교사 대시보드</div>
-                <div class="teacher-panel-sub">웹 화면에 맞춘 넓은 진행 패널입니다. 버튼 수는 유지하되 구역별로 정리했습니다.</div>
-              </div>
-              <div class="teacher-chip-row">
-                <div class="teacher-chip">웹형 레이아웃</div>
-                <div class="teacher-chip">통합 버튼 색상</div>
-                <div class="teacher-chip">진행 우선 정렬</div>
-              </div>
+          <div id="teacherPanel" class="card hidden">
+            <div class="section-title">교사 진행 패널</div>
+            <div class="teacher-summary">
+              <div class="summary-chip"><span class="small">현재 단계</span><strong id="teacherPhaseChip">대기</strong></div>
+              <div class="summary-chip"><span class="small">생존 학생</span><strong id="teacherAliveChip">0명</strong></div>
+              <div class="summary-chip"><span class="small">생존 마피아</span><strong id="teacherMafiaChip">0명</strong></div>
+              <div class="summary-chip"><span class="small">타이머</span><strong id="teacherTimerChip">--:--</strong></div>
             </div>
 
-            <div class="teacher-shell">
-              <div class="teacher-main">
-                <div class="teacher-section">
-                  <div class="teacher-section-head">
-                    <div>
-                      <div class="teacher-section-title">빠른 진행</div>
-                      <div class="teacher-section-desc">수업 진행에 자주 쓰는 핵심 버튼을 한곳에 모았습니다.</div>
-                    </div>
-                  </div>
-                  <div class="teacher-main-actions">
-                    <button id="assignRolesBtn" class="btn-blue">역할 랜덤 배정</button>
-                    <button id="phaseAndTimerBtn" class="btn-blue">단계+타이머 한번에</button>
-                    <button id="startNightBtn" class="btn-blue">밤 행동 시작</button>
-                    <button id="startVoteBtn" class="btn-blue">투표 시작</button>
-                    <button id="resolveNightBtn" class="btn-red">밤 행동 마감/처리</button>
-                    <button id="closeVoteBtn" class="btn-red">투표 마감/집계</button>
-                    <button id="sendNoticeBtn" class="btn-gray wide">공지 보내기</button>
-                  </div>
+            <div class="quickbar">
+              <button id="assignRolesBtn" class="btn-blue">역할 배정</button>
+              <button id="startVoteBtn" class="btn-blue">낮 투표 시작</button>
+              <button id="closeVoteBtn" class="btn-red">투표 마감</button>
+              <button id="runoffVoteBtn" class="btn-purple hidden">재투표 시작</button>
+              <button id="startNightBtn" class="btn-purple">밤 시작</button>
+              <button id="resolveNightBtn" class="btn-red">밤 결과 처리</button>
+            </div>
+
+            <div id="runoffNotice" class="teacher-note hidden">동률 발생: 재투표 버튼이 활성화되었습니다.</div>
+
+            <details class="teacher-group" open>
+              <summary>현재 결과 확인</summary>
+              <div class="group-body">
+                <div class="row">
+                  <label class="small">낮 투표 결과</label>
+                  <div id="voteResultBox" class="vote-result">투표 결과 대기 중</div>
                 </div>
-
-                <div class="teacher-main-grid">
-                  <div class="teacher-section">
-                    <div class="teacher-section-head">
-                      <div>
-                        <div class="teacher-section-title">단계 · 타이머</div>
-                        <div class="teacher-section-desc">단계를 바꾸고 시간을 제어합니다.</div>
-                      </div>
-                    </div>
-                    <div class="teacher-stack">
-                      <div class="row">
-                        <label class="small">단계 변경</label>
-                        <select id="phaseSelect">
-                          <option value="waiting">대기</option>
-                          <option value="discussion">토론</option>
-                          <option value="day">낮</option>
-                          <option value="night">밤</option>
-                          <option value="ended">종료</option>
-                        </select>
-                        <button id="setPhaseBtn" class="btn-gray">단계 적용</button>
-                      </div>
-                      <div class="row two">
-                        <div>
-                          <label class="small">타이머 종류</label>
-                          <select id="timerMode">
-                            <option value="discussion">토론</option>
-                            <option value="day">낮 투표</option>
-                            <option value="night">밤</option>
-                            <option value="waiting">대기</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label class="small">분</label>
-                          <input id="timerMinutes" type="number" min="1" max="120" value="3" />
-                        </div>
-                      </div>
-                      <div class="teacher-actions-compact three">
-                        <button id="startTimerBtn" class="btn-blue">시작</button>
-                        <button id="pauseTimerBtn" class="btn-gray">일시정지</button>
-                        <button id="resumeTimerBtn" class="btn-gray">재개</button>
-                      </div>
-                      <button id="stopTimerBtn" class="btn-red">타이머 종료</button>
-                    </div>
-                  </div>
-
-                  <div class="teacher-section">
-                    <div class="teacher-section-head">
-                      <div>
-                        <div class="teacher-section-title">공지 · 안내</div>
-                        <div class="teacher-section-desc">학생 전체에게 현재 상황을 바로 알립니다.</div>
-                      </div>
-                    </div>
-                    <div class="teacher-stack">
-                      <div class="teacher-highlight">
-                        <div class="teacher-select-note">버튼 색상을 정리해 주요 실행은 파랑, 취소/정리는 회색, 위험 작업은 빨강으로 통일했습니다.</div>
-                      </div>
-                      <div class="row">
-                        <label class="small">공지</label>
-                        <input id="noticeInput" maxlength="120" placeholder="전체 공지 입력" />
-                      </div>
-                      <div class="teacher-actions-compact">
-                        <button id="clearNoticeBtn" class="btn-gray">공지 지우기</button>
-                        <button id="newRoomBtn" class="btn-gray">새 방 다시 만들기</button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="teacher-section">
-                    <div class="teacher-section-head">
-                      <div>
-                        <div class="teacher-section-title">밤 · 낮 결과</div>
-                        <div class="teacher-section-desc">마감 후 결과를 바로 확인합니다.</div>
-                      </div>
-                    </div>
-                    <div class="teacher-stack">
-                      <div>
-                        <label class="small">밤 행동 결과</label>
-                        <div id="nightResultBox" class="vote-result">밤 결과 대기 중</div>
-                      </div>
-                      <div>
-                        <label class="small">낮 투표 결과</label>
-                        <div id="voteResultBox" class="vote-result">투표 결과 대기 중</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="teacher-section">
-                    <div class="teacher-section-head">
-                      <div>
-                        <div class="teacher-section-title">연출 · 상태 변경</div>
-                        <div class="teacher-section-desc">학생 상태와 역할 공개를 제어합니다.</div>
-                      </div>
-                    </div>
-                    <div class="teacher-stack">
-                      <div class="row">
-                        <label class="small">역할 공개 연출</label>
-                        <select id="revealPlayerSelect"></select>
-                        <button id="revealRoleBtn" class="btn-blue">선택 학생 역할 공개</button>
-                      </div>
-                      <div class="row">
-                        <label class="small">사망/부활 연출</label>
-                        <select id="killPlayerSelect"></select>
-                        <div class="teacher-actions-compact">
-                          <button id="killPlayerBtn" class="btn-red">선택 학생 사망 처리</button>
-                          <button id="revivePlayerBtn" class="btn-gray">선택 학생 부활 처리</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div style="height:12px"></div>
+                <div class="row">
+                  <label class="small">밤 결과</label>
+                  <div id="nightResultBox" class="vote-result">밤 결과 대기 중</div>
                 </div>
               </div>
+            </details>
 
-              <div class="teacher-side">
-                <div class="teacher-section">
-                  <div class="teacher-section-head">
-                    <div>
-                      <div class="teacher-section-title">방 관리</div>
-                      <div class="teacher-section-desc">마무리와 종료 관련 기능입니다.</div>
-                    </div>
+            <details class="teacher-group">
+              <summary>진행 / 타이머 설정</summary>
+              <div class="group-body">
+                <div class="row">
+                  <label class="small">단계 변경</label>
+                  <select id="phaseSelect">
+                    <option value="waiting">대기</option>
+                    <option value="discussion">토론</option>
+                    <option value="day">낮</option>
+                    <option value="night">밤</option>
+                    <option value="ended">종료</option>
+                  </select>
+                  <button id="setPhaseBtn" class="btn-blue">단계 적용</button>
+                </div>
+
+                <div style="height:14px"></div>
+
+                <div class="row two">
+                  <div>
+                    <label class="small">타이머 종류</label>
+                    <select id="timerMode">
+                      <option value="discussion">토론</option>
+                      <option value="day">낮 투표</option>
+                      <option value="night">밤</option>
+                      <option value="waiting">대기</option>
+                    </select>
                   </div>
-                  <div class="teacher-stack">
+                  <div>
+                    <label class="small">분</label>
+                    <input id="timerMinutes" type="number" min="1" max="120" value="3" />
+                  </div>
+                </div>
+
+                <div style="height:10px"></div>
+
+                <div class="actions3">
+                  <button id="startTimerBtn" class="btn-blue">시작</button>
+                  <button id="pauseTimerBtn" class="btn-gray">일시정지</button>
+                  <button id="resumeTimerBtn" class="btn-blue">재개</button>
+                </div>
+
+                <div style="height:10px"></div>
+                <div class="actions">
+                  <button id="stopTimerBtn" class="btn-red">타이머 종료</button>
+                  <button id="phaseAndTimerBtn" class="btn-purple">단계+타이머 적용</button>
+                </div>
+              </div>
+            </details>
+
+            <details class="teacher-group">
+              <summary>공지 / 연출 / 방 관리</summary>
+              <div class="group-body">
+                <div class="row">
+                  <label class="small">공지</label>
+                  <input id="noticeInput" maxlength="120" placeholder="전체 공지 입력" />
+                  <div class="actions">
+                    <button id="sendNoticeBtn" class="btn-blue">공지 보내기</button>
+                    <button id="clearNoticeBtn" class="btn-gray">공지 지우기</button>
+                  </div>
+                </div>
+
+                <div style="height:14px"></div>
+
+                <div class="row">
+                  <label class="small">역할 공개 연출</label>
+                  <select id="revealPlayerSelect"></select>
+                  <button id="revealRoleBtn" class="btn-purple">선택 학생 역할 공개</button>
+                </div>
+
+                <div style="height:14px"></div>
+
+                <div class="row">
+                  <label class="small">사망 / 부활 처리</label>
+                  <select id="killPlayerSelect"></select>
+                  <div class="actions">
+                    <button id="killPlayerBtn" class="btn-red">사망 처리</button>
+                    <button id="revivePlayerBtn" class="btn-gray">부활 처리</button>
+                  </div>
+                </div>
+
+                <div style="height:14px"></div>
+
+                <div class="row">
+                  <label class="small">방 관리</label>
+                  <div class="actions">
                     <button id="endRoomBtn" class="btn-red">방 종료</button>
+                    <button id="newRoomBtn" class="btn-blue">새 방 다시 만들기</button>
                   </div>
                 </div>
-
-                <div class="card">
-                  <div class="section-title">플레이어</div>
-                  <div id="playerList" class="player-list"></div>
-                </div>
               </div>
-            </div>
+            </details>
           </div>
-</div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="section-title">플레이어</div>
+            <div id="playerList" class="player-list"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div id="announceBanner" class="announce-banner hidden"></div>
 
   <div id="roleOverlay" class="overlay">
     <div class="modal">
@@ -500,6 +512,7 @@
     let latestVotes = {};
     let latestNight = {};
     let lastEffectSeenAt = 0;
+    let lastSpokenText = "";
 
     const DEFAULT_ROLES = [
       "마피아","마피아","의사","경찰","정치인","기자","군인","건달","성직자","테러리스트","시민","시민","시민","시민"
@@ -549,13 +562,12 @@
       $("landingView").classList.add("hidden");
       $("roomView").classList.remove("hidden");
       $("teacherPanel").classList.toggle("hidden", !isTeacher);
-      document.body.classList.toggle("teacher-layout", !!isTeacher);
+      $("mainGrid").classList.toggle("teacher-layout", !!isTeacher);
     }
 
     function switchToLanding(){
       $("roomView").classList.add("hidden");
       $("landingView").classList.remove("hidden");
-      document.body.classList.remove("teacher-layout");
     }
 
     function phaseLabelText(phase){
@@ -590,7 +602,209 @@
         .replaceAll("'","&#39;");
     }
 
-    function shuffle(arr){
+    
+    function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+    let mafiaAudioCtx = null;
+    let audioUnlocked = false;
+
+    function canPlayNarration(){
+      return !!(isTeacher && window.speechSynthesis);
+    }
+
+    function ensureAudioContext(){
+      try{
+        if(!mafiaAudioCtx){
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if(AudioCtx) mafiaAudioCtx = new AudioCtx();
+        }
+        if(mafiaAudioCtx && mafiaAudioCtx.state === "suspended"){
+          mafiaAudioCtx.resume().catch(()=>{});
+        }
+      }catch(e){}
+      return mafiaAudioCtx;
+    }
+
+    function unlockAudio(){
+      audioUnlocked = true;
+      ensureAudioContext();
+      if(window.speechSynthesis){
+        try{
+          const warmup = new SpeechSynthesisUtterance("");
+          warmup.volume = 0;
+          window.speechSynthesis.speak(warmup);
+          window.speechSynthesis.cancel();
+        }catch(e){}
+      }
+    }
+
+    ["click","touchstart","keydown"].forEach(evt=>{
+      document.addEventListener(evt, unlockAudio, { once:true, passive:true });
+    });
+
+    function getKoreanVoice(){
+      const voices = window.speechSynthesis?.getVoices?.() || [];
+      const koVoices = voices.filter(v => /ko/i.test(v.lang || "") || /korean|한국/i.test(v.name || ""));
+      const preferred = [
+        /male|man|google 한국의|microsoft.*ko-kr|sunhi|injoon|hyunsu|ko-kr/i,
+        /korean|한국|ko-kr/i
+      ];
+      for(const pattern of preferred){
+        const match = koVoices.find(v => pattern.test(v.name || "") || pattern.test(v.lang || ""));
+        if(match) return match;
+      }
+      return koVoices[0] || voices[0] || null;
+    }
+
+    function playTone({ frequency=220, frequencyEnd=null, duration=0.18, type="sine", volume=0.04, delay=0 } = {}){
+      const ctx = ensureAudioContext();
+      if(!ctx || !audioUnlocked || !isTeacher) return;
+      const nowAt = ctx.currentTime + delay;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(frequency, nowAt);
+      if(frequencyEnd != null){
+        osc.frequency.exponentialRampToValueAtTime(Math.max(1, frequencyEnd), nowAt + duration);
+      }
+      gain.gain.setValueAtTime(0.0001, nowAt);
+      gain.gain.exponentialRampToValueAtTime(volume, nowAt + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, nowAt + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(nowAt);
+      osc.stop(nowAt + duration + 0.03);
+    }
+
+    function playNoiseBurst({ duration=0.2, volume=0.03, delay=0 } = {}){
+      const ctx = ensureAudioContext();
+      if(!ctx || !audioUnlocked || !isTeacher) return;
+      const sampleRate = ctx.sampleRate;
+      const buffer = ctx.createBuffer(1, Math.max(1, sampleRate * duration), sampleRate);
+      const data = buffer.getChannelData(0);
+      for(let i=0;i<data.length;i++){
+        data[i] = (Math.random()*2 - 1) * (1 - i / data.length);
+      }
+      const src = ctx.createBufferSource();
+      const filter = ctx.createBiquadFilter();
+      const gain = ctx.createGain();
+      filter.type = "lowpass";
+      filter.frequency.value = 900;
+      gain.gain.value = volume;
+      src.buffer = buffer;
+      src.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      src.start(ctx.currentTime + delay);
+    }
+
+    function playSfx(kind){
+      if(!isTeacher) return;
+      switch(kind){
+        case "voteStart":
+          playTone({ frequency:392, frequencyEnd:523, duration:0.16, type:"triangle", volume:0.035 });
+          playTone({ frequency:523, frequencyEnd:659, duration:0.16, type:"triangle", volume:0.03, delay:0.12 });
+          break;
+        case "voteClose":
+          playTone({ frequency:340, frequencyEnd:220, duration:0.28, type:"sawtooth", volume:0.035 });
+          break;
+        case "tie":
+          playTone({ frequency:240, frequencyEnd:180, duration:0.18, type:"square", volume:0.03 });
+          playTone({ frequency:180, frequencyEnd:240, duration:0.18, type:"square", volume:0.03, delay:0.2 });
+          break;
+        case "execution":
+          playNoiseBurst({ duration:0.22, volume:0.02 });
+          playTone({ frequency:220, frequencyEnd:92, duration:0.65, type:"sawtooth", volume:0.05, delay:0.04 });
+          break;
+        case "night":
+          playTone({ frequency:180, frequencyEnd:110, duration:0.55, type:"triangle", volume:0.03 });
+          playTone({ frequency:110, frequencyEnd:82, duration:0.65, type:"sine", volume:0.025, delay:0.18 });
+          break;
+        case "death":
+          playNoiseBurst({ duration:0.16, volume:0.018 });
+          playTone({ frequency:260, frequencyEnd:120, duration:0.42, type:"sawtooth", volume:0.04 });
+          break;
+        case "revive":
+          playTone({ frequency:262, frequencyEnd:330, duration:0.18, type:"sine", volume:0.03 });
+          playTone({ frequency:330, frequencyEnd:440, duration:0.24, type:"sine", volume:0.028, delay:0.14 });
+          break;
+        case "winCitizen":
+          playTone({ frequency:392, frequencyEnd:523, duration:0.18, type:"triangle", volume:0.03 });
+          playTone({ frequency:523, frequencyEnd:659, duration:0.24, type:"triangle", volume:0.03, delay:0.16 });
+          playTone({ frequency:659, frequencyEnd:784, duration:0.28, type:"triangle", volume:0.03, delay:0.34 });
+          break;
+        case "winMafia":
+          playTone({ frequency:220, frequencyEnd:165, duration:0.26, type:"sawtooth", volume:0.03 });
+          playTone({ frequency:165, frequencyEnd:110, duration:0.5, type:"sawtooth", volume:0.04, delay:0.2 });
+          break;
+      }
+    }
+
+    function speakText(text, options = {}){
+      if(!text || !canPlayNarration()) return;
+      if(text === lastSpokenText) return;
+      lastSpokenText = text;
+      try{
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "ko-KR";
+        utter.rate = options.rate ?? 0.88;
+        utter.pitch = options.pitch ?? 0.68;
+        utter.volume = options.volume ?? 1;
+        const voice = getKoreanVoice();
+        if(voice) utter.voice = voice;
+        window.speechSynthesis.speak(utter);
+      }catch(e){}
+    }
+
+    function speakSequence(lines = [], options = {}){
+      if(!Array.isArray(lines) || !lines.length || !canPlayNarration()) return;
+      const cleanLines = lines.filter(Boolean);
+      if(!cleanLines.length) return;
+      const joined = cleanLines.join(" ");
+      if(joined === lastSpokenText) return;
+      lastSpokenText = joined;
+      try{
+        window.speechSynthesis.cancel();
+        let idx = 0;
+        const next = ()=>{
+          if(idx >= cleanLines.length) return;
+          const utter = new SpeechSynthesisUtterance(cleanLines[idx++]);
+          utter.lang = "ko-KR";
+          utter.rate = options.rate ?? 0.88;
+          utter.pitch = options.pitch ?? 0.68;
+          utter.volume = options.volume ?? 1;
+          const voice = getKoreanVoice();
+          if(voice) utter.voice = voice;
+          utter.onend = ()=>setTimeout(next, options.gapMs ?? 240);
+          window.speechSynthesis.speak(utter);
+        };
+        next();
+      }catch(e){}
+    }
+
+    function showAnnouncementBanner(text){
+      const el = $("announceBanner");
+      el.textContent = text || "";
+      el.classList.toggle("hidden", !text);
+      if(text){
+        clearTimeout(showAnnouncementBanner._t);
+        showAnnouncementBanner._t = setTimeout(()=>el.classList.add("hidden"), 4200);
+      }
+    }
+
+    async function broadcastAnnouncement(text, options = {}){
+      if(!isTeacher || !text) return;
+      await push(effectsRef(currentRoomCode), {
+        type:"announce",
+        message:text,
+        lines: Array.isArray(options.lines) ? options.lines : null,
+        sfx: options.sfx || null,
+        createdAt:now()
+      });
+    }
+
+function shuffle(arr){
       for(let i=arr.length-1;i>0;i--){
         const j = Math.floor(Math.random()*(i+1));
         [arr[i],arr[j]] = [arr[j],arr[i]];
@@ -878,10 +1092,53 @@
           }
         } else if(last.type === "death"){
           showDeathOverlay(last.targetName, last.role, false);
+          if(last.cause === "execution"){
+            showAnnouncementBanner(last.banner || `${last.targetName}님이 처형되었습니다.`);
+            if(isTeacher){
+              playSfx("execution");
+              speakSequence(last.lines || [
+                "판결이 내려졌습니다.",
+                `오늘의 희생자는, ${last.targetName}입니다.`,
+                `${last.targetName}님이 처형되었습니다.`
+              ]);
+            }
+          } else {
+            showAnnouncementBanner(last.banner || `${last.targetName}님이 살해되었습니다.`);
+            if(isTeacher){
+              playSfx("death");
+              speakSequence(last.lines || [
+                "날이 밝았습니다.",
+                `간밤에 ${last.targetName}님이 살해되었습니다.`
+              ]);
+            }
+          }
         } else if(last.type === "revive"){
           showDeathOverlay(last.targetName, last.role, true);
+          showAnnouncementBanner(last.banner || `${last.targetName}님이 다시 돌아왔습니다.`);
+          if(isTeacher){
+            playSfx("revive");
+            speakSequence(last.lines || [
+              "뜻밖의 반전이 벌어졌습니다.",
+              `${last.targetName}님이 다시 돌아왔습니다.`
+            ]);
+          }
+        } else if(last.type === "announce"){
+          showAnnouncementBanner(last.message);
+          if(isTeacher){
+            if(last.sfx) playSfx(last.sfx);
+            if(Array.isArray(last.lines) && last.lines.length){
+              speakSequence(last.lines);
+            } else {
+              speakText(last.message);
+            }
+          }
         } else if(last.type === "win"){
           showWinOverlay(last.winner, last.message);
+          showAnnouncementBanner(last.message || `${last.winner} 승리`);
+          if(isTeacher){
+            playSfx(last.side === "citizen" ? "winCitizen" : "winMafia");
+            speakSequence(last.lines || [last.message || `${last.winner} 승리`]);
+          }
         }
 
         lastEffectSeenAt = last.createdAt || now();
@@ -901,6 +1158,16 @@
         noticeBox.classList.remove("hidden");
       } else {
         noticeBox.classList.add("hidden");
+      }
+
+      const students = getStudentEntries();
+      const aliveStudents = students.filter(p=>p.alive);
+      const aliveMafia = aliveStudents.filter(p=>p.role === "마피아");
+      if($("teacherPhaseChip")){
+        $("teacherPhaseChip").textContent = phaseLabelText(latestRoom?.phase || "waiting");
+        $("teacherAliveChip").textContent = `${aliveStudents.length}명`;
+        $("teacherMafiaChip").textContent = `${aliveMafia.length}명`;
+        $("teacherTimerChip").textContent = $("roomTimerText").textContent || "--:--";
       }
     }
 
@@ -951,9 +1218,12 @@
     function fillVoteTargetSelect(arr){
       const sel = $("voteTargetSelect");
       const aliveStudents = arr.filter(p=>p.alive);
+      const candidates = Array.isArray(latestVotes?.runoffCandidates) && latestVotes.runoffCandidates.length
+        ? aliveStudents.filter(p=>latestVotes.runoffCandidates.includes(p.id))
+        : aliveStudents;
       const prev = sel.value;
-      sel.innerHTML = aliveStudents.map(p=>`<option value="${p.id}">${escapeHtml(p.name)}</option>`).join("");
-      if(aliveStudents.some(x=>x.id===prev)) sel.value = prev;
+      sel.innerHTML = candidates.map(p=>`<option value="${p.id}">${escapeHtml(p.name)}</option>`).join("");
+      if(candidates.some(x=>x.id===prev)) sel.value = prev;
     }
 
     function fillNightTargetSelect(arr){
@@ -1006,6 +1276,7 @@
       }
 
       textEl.textContent = formatTime(remainingSec);
+      if($("teacherTimerChip")) $("teacherTimerChip").textContent = textEl.textContent;
       textEl.classList.toggle("danger", remainingSec > 0 && remainingSec <= 10);
       if(remainingSec <= 0 && latestTimerState.endsAt) subEl.textContent = "시간 종료";
     }
@@ -1015,6 +1286,7 @@
       const myVoteStatus = $("myVoteStatus");
       const open = !!latestVotes?.open;
       const me = latestPlayers[currentPlayerId];
+      const hasRunoff = Array.isArray(latestVotes?.pendingRunoffCandidates) && latestVotes.pendingRunoffCandidates.length > 1;
 
       if(isTeacher){
         studentVotePanel.classList.add("hidden");
@@ -1027,16 +1299,24 @@
       if(!me || me.alive === false){
         myVoteStatus.textContent = "사망자는 낮 투표를 할 수 없습니다.";
       } else if(!open){
-        myVoteStatus.textContent = latestVotes?.resultText || "투표 대기 중";
+        myVoteStatus.textContent = latestVotes?.studentResultText || "투표 대기 중";
       } else if(myVote?.targetId){
         const target = latestPlayers[myVote.targetId];
-        myVoteStatus.textContent = `내 투표: ${target?.name || "알 수 없음"}\n제출 완료`;
+        const roundText = latestVotes?.runoffCandidates?.length ? "재투표" : "낮 투표";
+        myVoteStatus.textContent = `내 ${roundText}: ${target?.name || "알 수 없음"}
+제출 완료`;
       } else {
-        myVoteStatus.textContent = "투표가 열렸습니다. 대상 1명을 선택해 제출하세요.";
+        myVoteStatus.textContent = latestVotes?.runoffCandidates?.length
+          ? "재투표가 열렸습니다. 동률 후보 중 1명을 선택해 제출하세요."
+          : "투표가 열렸습니다. 대상 1명을 선택해 제출하세요.";
       }
 
-      if(isTeacher){
-        $("voteResultBox").textContent = latestVotes?.resultText || "투표 결과 대기 중";
+      $("voteResultBox").textContent = latestVotes?.resultText || "투표 결과 대기 중";
+      $("runoffVoteBtn").classList.toggle("hidden", !hasRunoff);
+      $("runoffNotice").classList.toggle("hidden", !hasRunoff);
+      if(hasRunoff){
+        const names = latestVotes.pendingRunoffCandidates.map(pid => latestPlayers[pid]?.name || pid).join(", ");
+        $("runoffNotice").textContent = `동률 발생: ${names} 후보로 재투표를 시작할 수 있습니다.`;
       }
     }
 
@@ -1202,12 +1482,54 @@
         createdAt:now(),
         closedAt:null,
         resultText:"투표 진행 중",
+        studentResultText:"투표가 진행 중입니다.",
+        runoffCandidates:null,
+        pendingRunoffCandidates:null,
+        runoffRound:0,
         votes:{}
       });
       await update(roomRef(currentRoomCode), {
         phase:"day",
         notice:"낮 투표가 시작되었습니다.",
         updatedAt:now()
+      });
+      await broadcastAnnouncement("낮 투표가 시작되었습니다.", {
+        sfx:"voteStart",
+        lines:[
+          "낮이 밝았습니다.",
+          "이제 용의자를 지목할 시간입니다.",
+          "신중하게, 한 사람을 선택해 주십시오."
+        ]
+      });
+    }
+
+    async function startRunoffVote(){
+      if(!isTeacher) return;
+      const candidates = latestVotes?.pendingRunoffCandidates || [];
+      if(candidates.length < 2) return alert("재투표 대상이 없습니다.");
+      await update(votesRef(currentRoomCode), {
+        open:true,
+        createdAt:now(),
+        closedAt:null,
+        resultText:`재투표 진행 중 (${(latestVotes?.runoffRound || 0) + 1}차)`,
+        studentResultText:"재투표가 진행 중입니다.",
+        runoffCandidates:candidates,
+        pendingRunoffCandidates:null,
+        runoffRound:(latestVotes?.runoffRound || 0) + 1,
+        votes:{}
+      });
+      await update(roomRef(currentRoomCode), {
+        phase:"day",
+        notice:"동률이 발생하여 재투표가 시작되었습니다.",
+        updatedAt:now()
+      });
+      await broadcastAnnouncement("동률이 발생했습니다. 재투표를 시작합니다.", {
+        sfx:"tie",
+        lines:[
+          "아직 결론은 나지 않았습니다.",
+          "동률이 확인되었습니다.",
+          "결론을 위해 재투표를 시작하겠습니다."
+        ]
       });
     }
 
@@ -1301,9 +1623,37 @@
       updates[`rooms/${currentRoomCode}/dayVote/closedAt`] = now();
       updates[`rooms/${currentRoomCode}/dayVote/resultText`] = resultLines.join("\n");
 
+      if(result.reason.includes("동률")){
+        const topScore = Math.max(...Object.values(result.tally));
+        const tiedIds = Object.entries(result.tally).filter(([,score]) => score === topScore).map(([pid]) => pid);
+        updates[`rooms/${currentRoomCode}/dayVote/studentResultText`] = "동률입니다. 교사가 재투표를 시작할 예정입니다.";
+        updates[`rooms/${currentRoomCode}/dayVote/pendingRunoffCandidates`] = tiedIds;
+        updates[`rooms/${currentRoomCode}/dayVote/runoffCandidates`] = null;
+        await update(ref(db), updates);
+        await broadcastAnnouncement("동률입니다. 잠시 후 재투표가 진행됩니다.", {
+          sfx:"tie",
+          lines:[
+            "아직 결론은 나지 않았습니다.",
+            "최다 득표가 동률입니다.",
+            "잠시 후 재투표를 진행하겠습니다."
+          ]
+        });
+        return;
+      }
+
+      let announceText = "";
       if(result.executed){
         updates[`rooms/${currentRoomCode}/players/${result.executed.id}/alive`] = false;
         updates[`rooms/${currentRoomCode}/players/${result.executed.id}/lastSeen`] = now();
+        updates[`rooms/${currentRoomCode}/dayVote/studentResultText`] = `${result.executed.name}님이 처형되었습니다. 잠시 후 밤이 시작됩니다.`;
+        updates[`rooms/${currentRoomCode}/dayVote/pendingRunoffCandidates`] = null;
+        updates[`rooms/${currentRoomCode}/dayVote/runoffCandidates`] = null;
+        announceText = `${result.executed.name}님이 처형되었습니다. 이제 밤이 시작됩니다.`;
+      } else {
+        updates[`rooms/${currentRoomCode}/dayVote/studentResultText`] = `${result.reason}. 잠시 후 밤이 시작됩니다.`;
+        updates[`rooms/${currentRoomCode}/dayVote/pendingRunoffCandidates`] = null;
+        updates[`rooms/${currentRoomCode}/dayVote/runoffCandidates`] = null;
+        announceText = `${result.reason}. 이제 밤이 시작됩니다.`;
       }
 
       await update(ref(db), updates);
@@ -1311,10 +1661,30 @@
       if(result.executed){
         await push(effectsRef(currentRoomCode), {
           type:"death",
+          cause:"execution",
+          banner:`${result.executed.name}님이 처형되었습니다.`,
+          lines:[
+            "판결이 내려졌습니다.",
+            `오늘의 희생자는, ${result.executed.name}입니다.`,
+            `${result.executed.name}님이 처형되었습니다.`
+          ],
           targetId:result.executed.id,
           targetName:result.executed.name,
           role:result.executed.role || "비공개",
           createdAt:now()
+        });
+      }
+
+      if(announceText){
+        await broadcastAnnouncement(announceText, {
+          sfx:"night",
+          lines: result.executed ? [
+            "곧 밤이 찾아옵니다.",
+            "모두 고개를 숙이고 다음 단계를 준비해 주십시오."
+          ] : [
+            `${result.reason}.`,
+            "곧 밤이 찾아옵니다."
+          ]
         });
       }
 
@@ -1323,10 +1693,16 @@
         simulated[result.executed.id] = { ...simulated[result.executed.id], alive:false };
       }
       const win = checkWinConditionAfterState(simulated);
-      if(win) await applyWin(win);
+      if(win){
+        await applyWin(win);
+        return;
+      }
+
+      await sleep(result.executed ? 2600 : 1800);
+      await startNightAction(true);
     }
 
-    async function startNightAction(){
+    async function startNightAction(fromAutoVoteFlow = false){
       if(!isTeacher) return;
 
       const students = getStudentEntries();
@@ -1349,8 +1725,16 @@
 
       await update(roomRef(currentRoomCode), {
         phase:"night",
-        notice:"밤 행동이 시작되었습니다.",
+        notice: fromAutoVoteFlow ? "낮 투표가 종료되어 밤 행동이 자동으로 시작되었습니다." : "밤 행동이 시작되었습니다.",
         updatedAt:now()
+      });
+
+      await broadcastAnnouncement(fromAutoVoteFlow ? "밤이 시작되었습니다. 각자 역할에 맞는 행동을 선택하세요." : "밤 행동이 시작되었습니다.", {
+        sfx:"night",
+        lines:[
+          "밤이 찾아왔습니다.",
+          "모두 고개를 숙이고, 역할에 맞는 행동을 선택해 주십시오."
+        ]
       });
     }
 
@@ -1503,6 +1887,12 @@
       if(killedTarget){
         await push(effectsRef(currentRoomCode), {
           type:"death",
+          cause:"nightKill",
+          banner:`${killedTarget.name}님이 살해되었습니다.`,
+          lines:[
+            "날이 밝았습니다.",
+            `간밤에 ${killedTarget.name}님이 살해되었습니다.`
+          ],
           targetId:killedTarget.id,
           targetName:killedTarget.name,
           role:killedTarget.role || "비공개",
@@ -1560,7 +1950,15 @@
       await push(effectsRef(currentRoomCode), {
         type:"win",
         winner:win.winner,
+        side: /시민/.test(win.winner) ? "citizen" : "mafia",
         message:win.message,
+        lines: /시민/.test(win.winner) ? [
+          "마피아는 모두 제거되었습니다.",
+          "시민 팀의 승리입니다."
+        ] : [
+          "이 마을은 더 이상 안전하지 않습니다.",
+          "마피아 팀의 승리입니다."
+        ],
         createdAt:now()
       });
     }
@@ -1590,8 +1988,25 @@
         lastSeen: now()
       });
 
-      await push(effectsRef(currentRoomCode), {
-        type: dead ? "death":"revive",
+      await push(effectsRef(currentRoomCode), dead ? {
+        type:"death",
+        cause:"manualDeath",
+        banner:`${p.name}님이 퇴장 처리되었습니다.`,
+        lines:[
+          "상황이 정리되었습니다.",
+          `${p.name}님이 퇴장 처리되었습니다.`
+        ],
+        targetId:pid,
+        targetName:p.name,
+        role:p.role || "비공개",
+        createdAt:now()
+      } : {
+        type:"revive",
+        banner:`${p.name}님이 게임에 복귀했습니다.`,
+        lines:[
+          "게임으로 복귀하는 플레이어가 있습니다.",
+          `${p.name}님이 다시 참여합니다.`
+        ],
         targetId:pid,
         targetName:p.name,
         role:p.role || "비공개",
@@ -1684,6 +2099,9 @@
       $("myNightStatus").textContent = "밤 행동 대기 중";
       $("policeResultBox").classList.add("hidden");
       $("policeResultBox").textContent = "";
+      if($("runoffVoteBtn")) $("runoffVoteBtn").classList.add("hidden");
+      if($("runoffNotice")) $("runoffNotice").classList.add("hidden");
+      if($("announceBanner")) $("announceBanner").classList.add("hidden");
     }
 
     function showRoleOverlay(name, role){
@@ -1695,8 +2113,8 @@
     function showDeathOverlay(name, role, revive=false){
       $("deathOverlayName").textContent = name || "플레이어";
       $("deathOverlayText").textContent = revive
-        ? `부활 처리되었습니다. 역할: ${role || "비공개"}`
-        : `사망 처리되었습니다. 역할: ${role || "비공개"}`;
+        ? `다시 게임에 복귀했습니다. 역할: ${role || "비공개"}`
+        : `살해되었습니다. 역할: ${role || "비공개"}`;
       $("deathOverlay").classList.add("show");
     }
 
@@ -1771,6 +2189,7 @@
 
     $("startVoteBtn").addEventListener("click", startDayVote);
     $("closeVoteBtn").addEventListener("click", closeDayVoteAndJudge);
+    $("runoffVoteBtn").addEventListener("click", startRunoffVote);
     $("submitVoteBtn").addEventListener("click", submitVote);
 
     $("revealRoleBtn").addEventListener("click", revealPlayerRole);
@@ -1778,6 +2197,10 @@
     $("revivePlayerBtn").addEventListener("click", ()=> markPlayerDead(false));
     $("endRoomBtn").addEventListener("click", endRoomOnly);
     $("newRoomBtn").addEventListener("click", newRoomAgain);
+
+    if(window.speechSynthesis){
+      window.speechSynthesis.onvoiceschanged = ()=> getKoreanVoice();
+    }
 
     (async function init(){
       setConnectedBadge(navigator.onLine ? "온라인" : "오프라인");
