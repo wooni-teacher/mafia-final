@@ -6,44 +6,70 @@
   <title>Classroom Mafia Firebase</title>
   <style>
     :root{
-      --bg:#0b0f16;
-      --panel:#131926;
-      --panel2:#1a2233;
+      --bg:#0f1724;
+      --bg2:#121b2d;
+      --panel:#161f31;
+      --panel2:#1a2438;
+      --soft:#222d45;
       --line:rgba(255,255,255,.08);
       --text:#f5f7fb;
-      --sub:#9aa4b2;
-      --blue:#4f8cff;
+      --sub:#96a3b8;
+      --blue:#5a8fff;
       --green:#33c27f;
-      --red:#ff5d5d;
+      --red:#ff6767;
       --yellow:#f5bf42;
       --purple:#9b6bff;
-      --shadow:0 10px 30px rgba(0,0,0,.28);
+      --shadow:0 10px 26px rgba(0,0,0,.22);
       --radius:18px;
+      --radius-sm:14px;
     }
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-    html,body{margin:0;padding:0;background:linear-gradient(180deg,#090d14,#111827);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;}
+    html,body{
+      margin:0;padding:0;
+      background:
+        radial-gradient(circle at top, rgba(90,143,255,.10), transparent 26%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      color:var(--text);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;
+    }
     body{min-height:100vh;}
     button,input,select{font:inherit;}
-    button{cursor:pointer;border:none;border-radius:14px;padding:14px 16px;font-weight:800;}
+    button{
+      cursor:pointer;border:none;border-radius:12px;padding:12px 14px;font-weight:800;
+      transition:transform .14s ease, opacity .14s ease, filter .14s ease;
+    }
+    button:hover{filter:brightness(1.03);}
+    button:active{transform:translateY(1px) scale(.995);}
     input,select{
       width:100%;
       border:1px solid var(--line);
-      background:#0f1521;
+      background:#111826;
       color:var(--text);
-      border-radius:14px;
-      padding:14px 14px;
+      border-radius:12px;
+      padding:12px 13px;
       outline:none;
     }
     h1,h2,h3,p{margin:0;}
-    .app{max-width:1280px;margin:0 auto;padding:16px;padding-bottom:42px;}
-    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;}
-    .brand{font-size:clamp(22px,4vw,34px);font-weight:900;letter-spacing:-.02em;}
-    .small{color:var(--sub);font-size:13px;}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);padding:10px 14px;border-radius:999px;color:var(--sub);font-size:13px;font-weight:700;}
+    .app{max-width:1220px;margin:0 auto;padding:18px;padding-bottom:36px;}
+    .topbar{
+      display:flex;gap:12px;align-items:flex-end;justify-content:space-between;
+      margin-bottom:16px;flex-wrap:wrap;
+    }
+    .brand{font-size:clamp(22px,4vw,32px);font-weight:950;letter-spacing:-.03em;}
+    .small{color:var(--sub);font-size:12px;}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);
+      border:1px solid var(--line);padding:9px 13px;border-radius:999px;color:var(--sub);
+      font-size:12px;font-weight:800;
+    }
     .grid{display:grid;gap:14px;}
     .grid.main{grid-template-columns:1fr;}
-    .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
-    .section-title{font-size:18px;font-weight:900;margin-bottom:12px;}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)), linear-gradient(180deg,var(--panel),var(--panel2));
+      border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);
+      backdrop-filter:blur(6px);
+    }
+    .section-title{font-size:17px;font-weight:900;margin-bottom:12px;letter-spacing:-.01em;}
     .row{display:grid;grid-template-columns:1fr;gap:10px;}
     .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
     .actions3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
@@ -51,17 +77,21 @@
     .btn-green{background:var(--green);color:white;}
     .btn-red{background:var(--red);color:white;}
     .btn-yellow{background:var(--yellow);color:#241700;}
-    .btn-gray{background:#2a3346;color:white;}
+    .btn-gray{background:#2d374c;color:white;}
     .btn-purple{background:var(--purple);color:white;}
-    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);}
+    .btn-ghost{background:rgba(255,255,255,.035);border:1px solid var(--line);color:var(--text);}
     .hidden{display:none !important;}
 
     .hero{display:grid;gap:14px;grid-template-columns:1fr;}
-    .timer-box{width:100%;border-radius:20px;background:linear-gradient(180deg,#1a1f30,#0e1320);border:1px solid var(--line);padding:18px;text-align:center;box-shadow:var(--shadow);}
-    .timer-mode{font-size:18px;font-weight:900;color:#d7e1ff;margin-bottom:8px;}
-    .timer-text{font-size:clamp(38px,10vw,70px);font-weight:1000;letter-spacing:2px;line-height:1;}
+    .timer-box{
+      width:100%;border-radius:20px;
+      background:linear-gradient(180deg,#182238,#101826);
+      border:1px solid var(--line);padding:20px;text-align:center;box-shadow:var(--shadow);
+    }
+    .timer-mode{font-size:16px;font-weight:900;color:#d7e1ff;margin-bottom:8px;}
+    .timer-text{font-size:clamp(36px,9vw,62px);font-weight:1000;letter-spacing:1px;line-height:1;}
     .timer-text.danger{color:var(--red);animation:pulse 1s infinite;}
-    .timer-sub{margin-top:10px;color:var(--sub);font-size:14px;font-weight:700;}
+    .timer-sub{margin-top:10px;color:var(--sub);font-size:13px;font-weight:700;}
     @keyframes pulse{
       0%{transform:scale(1);opacity:1;}
       50%{transform:scale(1.04);opacity:.78;}
@@ -69,17 +99,41 @@
     }
 
     .status-box{display:grid;gap:10px;grid-template-columns:1fr 1fr;}
-    .stat{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:16px;padding:14px;}
-    .stat .label{color:var(--sub);font-size:12px;font-weight:800;margin-bottom:6px;}
-    .stat .value{font-size:18px;font-weight:900;}
+    .stat{
+      border:1px solid var(--line);background:rgba(255,255,255,.035);
+      border-radius:14px;padding:13px 14px;
+    }
+    .stat .label{color:var(--sub);font-size:11px;font-weight:800;margin-bottom:6px;text-transform:none;}
+    .stat .value{font-size:17px;font-weight:900;line-height:1.25;}
 
-    .notice{margin-top:12px;padding:12px 14px;border-radius:14px;border:1px solid rgba(79,140,255,.25);background:rgba(79,140,255,.08);color:#dbe7ff;font-weight:700;white-space:pre-wrap;}
+    .notice{
+      margin-top:12px;padding:12px 14px;border-radius:12px;border:1px solid rgba(79,140,255,.25);
+      background:rgba(79,140,255,.08);color:#dbe7ff;font-weight:700;white-space:pre-wrap;
+    }
+
+    .teacher-layout{display:grid;gap:12px;}
+    .control-grid{display:grid;gap:12px;grid-template-columns:1fr;}
+    .control-group{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:13px;
+    }
+    .control-group .small{display:block;margin-bottom:8px;}
+    .mini-title{
+      font-size:13px;font-weight:900;letter-spacing:-.01em;color:#dfe7f6;
+      margin-bottom:10px;
+    }
+
     .player-list{display:grid;gap:10px;grid-template-columns:1fr;}
-    .player{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);}
-    .player-name{font-size:16px;font-weight:900;}
+    .player{
+      display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+      padding:12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--line);
+    }
+    .player-name{font-size:15px;font-weight:900;}
     .player-meta{color:var(--sub);font-size:12px;font-weight:700;margin-top:4px;}
     .tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;}
-    .tag{font-size:12px;font-weight:900;padding:7px 10px;border-radius:999px;background:#2a3346;color:#fff;}
+    .tag{font-size:11px;font-weight:900;padding:7px 10px;border-radius:999px;background:#2a3346;color:#fff;}
     .tag.alive{background:#1d4f39;}
     .tag.dead{background:#5c2424;}
     .tag.host{background:#3c3267;}
@@ -87,10 +141,16 @@
     .tag.role{background:#6a4f10;color:#fff3c9;}
 
     .info-list{display:grid;gap:8px;}
-    .info-line{border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:10px 12px;color:var(--sub);font-weight:700;font-size:13px;}
+    .info-line{
+      border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--line);
+      padding:10px 12px;color:var(--sub);font-weight:700;font-size:13px;
+    }
 
     .vote-box,.night-box{display:grid;gap:10px;}
-    .vote-result{margin-top:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);white-space:pre-wrap;font-weight:700;line-height:1.5;}
+    .vote-result{
+      margin-top:10px;padding:12px;border-radius:12px;background:rgba(255,255,255,.035);
+      border:1px solid var(--line);white-space:pre-wrap;font-weight:700;line-height:1.5;
+    }
     .role-hint{
       margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(155,107,255,.10);
       border:1px solid rgba(155,107,255,.22);color:#e8dcff;font-weight:700;font-size:13px;
@@ -110,26 +170,36 @@
       text-align:center;
       box-shadow:0 30px 80px rgba(0,0,0,.5);
     }
-    .modal h2{font-size:30px;font-weight:1000;margin-bottom:10px;}
-    .modal .role-name{font-size:38px;font-weight:1000;color:#ffd166;margin:10px 0 4px;}
+    .modal h2{font-size:28px;font-weight:1000;margin-bottom:10px;}
+    .modal .role-name{font-size:36px;font-weight:1000;color:#ffd166;margin:10px 0 4px;}
     .modal .death-name{font-size:28px;font-weight:1000;color:#ff8c8c;}
     .modal p{color:var(--sub);font-weight:700;line-height:1.5;}
     .footer-gap{height:8px;}
 
     @media (min-width: 900px){
-      .grid.main{grid-template-columns:380px 1fr;align-items:start;}
-      .hero{grid-template-columns:1fr 1fr;}
+      .grid.main{grid-template-columns:minmax(320px,360px) 1fr;align-items:start;}
+      .hero{grid-template-columns:1.05fr .95fr;}
       .row.two{grid-template-columns:1fr 1fr;}
       .player-list{grid-template-columns:1fr 1fr;}
+      .control-grid{grid-template-columns:1fr 1fr;}
     }
-  </style>
+
+    @media (max-width: 640px){
+      .app{padding:14px 14px 28px;}
+      .actions,.actions3{grid-template-columns:1fr;}
+      .status-box{grid-template-columns:1fr 1fr;}
+      .card,.timer-box{padding:14px;}
+      .control-group{padding:12px;}
+      .section-title{font-size:16px;}
+    }
+</style>
 </head>
 <body>
   <div class="app">
     <div class="topbar">
       <div>
         <div class="brand">Classroom Mafia</div>
-        <div class="small">Firebase Realtime Database 단일 HTML 완성형</div>
+        <div class="small">간소화 UI · Firebase Realtime Database 단일 HTML</div>
       </div>
       <div class="pill" id="connState">연결 확인 중...</div>
     </div>
@@ -216,119 +286,122 @@
             </div>
           </div>
 
-          <div id="teacherPanel" class="card hidden">
+          
+<div id="teacherPanel" class="card hidden">
             <div class="section-title">교사 진행 패널</div>
+            <div class="teacher-layout">
+              <div class="control-grid">
+                <div class="control-group">
+                  <div class="mini-title">진행 단계</div>
+                  <div class="row">
+                    <label class="small">단계 변경</label>
+                    <select id="phaseSelect">
+                      <option value="waiting">대기</option>
+                      <option value="discussion">토론</option>
+                      <option value="day">낮</option>
+                      <option value="night">밤</option>
+                      <option value="ended">종료</option>
+                    </select>
+                    <button id="setPhaseBtn" class="btn-blue">단계 적용</button>
+                  </div>
+                </div>
 
-            <div class="row">
-              <label class="small">단계 변경</label>
-              <select id="phaseSelect">
-                <option value="waiting">대기</option>
-                <option value="discussion">토론</option>
-                <option value="day">낮</option>
-                <option value="night">밤</option>
-                <option value="ended">종료</option>
-              </select>
-              <button id="setPhaseBtn" class="btn-blue">단계 적용</button>
-            </div>
+                <div class="control-group">
+                  <div class="mini-title">타이머</div>
+                  <div class="row two">
+                    <div>
+                      <label class="small">타이머 종류</label>
+                      <select id="timerMode">
+                        <option value="discussion">토론</option>
+                        <option value="day">낮 투표</option>
+                        <option value="night">밤</option>
+                        <option value="waiting">대기</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="small">분</label>
+                      <input id="timerMinutes" type="number" min="1" max="120" value="3" />
+                    </div>
+                  </div>
+                  <div style="height:10px"></div>
+                  <div class="actions3">
+                    <button id="startTimerBtn" class="btn-green">시작</button>
+                    <button id="pauseTimerBtn" class="btn-yellow">일시정지</button>
+                    <button id="resumeTimerBtn" class="btn-blue">재개</button>
+                  </div>
+                  <div style="height:10px"></div>
+                  <div class="actions">
+                    <button id="stopTimerBtn" class="btn-red">종료</button>
+                    <button id="phaseAndTimerBtn" class="btn-purple">단계+타이머 한번에</button>
+                  </div>
+                </div>
 
-            <div style="height:14px"></div>
+                <div class="control-group">
+                  <div class="mini-title">공지 / 세팅</div>
+                  <div class="row">
+                    <label class="small">공지</label>
+                    <input id="noticeInput" maxlength="120" placeholder="전체 공지 입력" />
+                    <div class="actions">
+                      <button id="sendNoticeBtn" class="btn-blue">공지 보내기</button>
+                      <button id="clearNoticeBtn" class="btn-gray">공지 지우기</button>
+                    </div>
+                  </div>
+                  <div style="height:12px"></div>
+                  <div class="row">
+                    <label class="small">역할 배정</label>
+                    <button id="assignRolesBtn" class="btn-green">역할 랜덤 배정</button>
+                  </div>
+                </div>
 
-            <div class="row two">
-              <div>
-                <label class="small">타이머 종류</label>
-                <select id="timerMode">
-                  <option value="discussion">토론</option>
-                  <option value="day">낮 투표</option>
-                  <option value="night">밤</option>
-                  <option value="waiting">대기</option>
-                </select>
-              </div>
-              <div>
-                <label class="small">분</label>
-                <input id="timerMinutes" type="number" min="1" max="120" value="3" />
-              </div>
-            </div>
+                <div class="control-group">
+                  <div class="mini-title">밤 / 낮 처리</div>
+                  <div class="row">
+                    <label class="small">밤 행동 관리</label>
+                    <div class="actions">
+                      <button id="startNightBtn" class="btn-purple">밤 행동 시작</button>
+                      <button id="resolveNightBtn" class="btn-red">밤 행동 마감/처리</button>
+                    </div>
+                    <div id="nightResultBox" class="vote-result">밤 결과 대기 중</div>
+                  </div>
+                  <div style="height:12px"></div>
+                  <div class="row">
+                    <label class="small">낮 투표 관리</label>
+                    <div class="actions">
+                      <button id="startVoteBtn" class="btn-blue">투표 시작</button>
+                      <button id="closeVoteBtn" class="btn-red">투표 마감/집계</button>
+                    </div>
+                    <div id="voteResultBox" class="vote-result">투표 결과 대기 중</div>
+                  </div>
+                </div>
 
-            <div style="height:10px"></div>
+                <div class="control-group">
+                  <div class="mini-title">연출</div>
+                  <div class="row">
+                    <label class="small">역할 공개 연출</label>
+                    <select id="revealPlayerSelect"></select>
+                    <button id="revealRoleBtn" class="btn-purple">선택 학생 역할 공개</button>
+                  </div>
+                  <div style="height:12px"></div>
+                  <div class="row">
+                    <label class="small">사망 연출</label>
+                    <select id="killPlayerSelect"></select>
+                    <div class="actions">
+                      <button id="killPlayerBtn" class="btn-red">선택 학생 사망 처리</button>
+                      <button id="revivePlayerBtn" class="btn-green">선택 학생 부활 처리</button>
+                    </div>
+                  </div>
+                </div>
 
-            <div class="actions3">
-              <button id="startTimerBtn" class="btn-green">시작</button>
-              <button id="pauseTimerBtn" class="btn-yellow">일시정지</button>
-              <button id="resumeTimerBtn" class="btn-blue">재개</button>
-            </div>
-
-            <div style="height:10px"></div>
-            <div class="actions">
-              <button id="stopTimerBtn" class="btn-red">종료</button>
-              <button id="phaseAndTimerBtn" class="btn-purple">단계+타이머 한번에</button>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">공지</label>
-              <input id="noticeInput" maxlength="120" placeholder="전체 공지 입력" />
-              <div class="actions">
-                <button id="sendNoticeBtn" class="btn-blue">공지 보내기</button>
-                <button id="clearNoticeBtn" class="btn-gray">공지 지우기</button>
-              </div>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">역할 배정</label>
-              <button id="assignRolesBtn" class="btn-green">역할 랜덤 배정</button>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">밤 행동 관리</label>
-              <div class="actions">
-                <button id="startNightBtn" class="btn-purple">밤 행동 시작</button>
-                <button id="resolveNightBtn" class="btn-red">밤 행동 마감/처리</button>
-              </div>
-              <div id="nightResultBox" class="vote-result">밤 결과 대기 중</div>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">낮 투표 관리</label>
-              <div class="actions">
-                <button id="startVoteBtn" class="btn-blue">투표 시작</button>
-                <button id="closeVoteBtn" class="btn-red">투표 마감/집계</button>
-              </div>
-              <div id="voteResultBox" class="vote-result">투표 결과 대기 중</div>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">역할 공개 연출</label>
-              <select id="revealPlayerSelect"></select>
-              <button id="revealRoleBtn" class="btn-purple">선택 학생 역할 공개</button>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">사망 연출</label>
-              <select id="killPlayerSelect"></select>
-              <div class="actions">
-                <button id="killPlayerBtn" class="btn-red">선택 학생 사망 처리</button>
-                <button id="revivePlayerBtn" class="btn-green">선택 학생 부활 처리</button>
-              </div>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="row">
-              <label class="small">방 관리</label>
-              <div class="actions">
-                <button id="endRoomBtn" class="btn-red">방 종료</button>
-                <button id="newRoomBtn" class="btn-blue">새 방 다시 만들기</button>
+                <div class="control-group">
+                  <div class="mini-title">방 관리</div>
+                  <div class="row">
+                    <label class="small">세션 종료 / 재생성</label>
+                    <div class="actions">
+                      <button id="endRoomBtn" class="btn-red">방 종료</button>
+                      <button id="newRoomBtn" class="btn-blue">새 방 다시 만들기</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
